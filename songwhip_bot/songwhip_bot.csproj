@@ -12,10 +12,4 @@
       <PackageReference Include="RestSharp" Version="106.11.7" />
     </ItemGroup>
 
-    <ItemGroup>
-      <None Update="options.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-    </ItemGroup>
-
 </Project>

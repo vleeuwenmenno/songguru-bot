@@ -4,7 +4,16 @@
     <projectFile>songwhip_bot/songwhip_bot.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4e905cea-65c9-4443-a8ff-b5e2a2daebba" name="Default Changelist" comment="" />
+    <list default="true" id="4e905cea-65c9-4443-a8ff-b5e2a2daebba" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/songwhip_bot/Utilities.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.songwhip_bot/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.songwhip_bot/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/songwhip_bot/Options.cs" beforeDir="false" afterPath="$PROJECT_DIR$/songwhip_bot/Options.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/songwhip_bot/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/songwhip_bot/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/songwhip_bot/Songwhip.cs" beforeDir="false" afterPath="$PROJECT_DIR$/songwhip_bot/Songwhip.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/songwhip_bot/SongwhipCommands.cs" beforeDir="false" afterPath="$PROJECT_DIR$/songwhip_bot/SongwhipCommands.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/songwhip_bot/options.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/songwhip_bot/songwhip_bot.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/songwhip_bot/songwhip_bot.csproj" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,6 +22,19 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/880FC9E3-177E-4DC5-8CB7-607DB806B795/37/JsonSerializer.Write.String.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/576BEC19-D8AC-4AB7-9D98-CD1623F32A17/228/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <changedPaths>
+      <option value="$PROJECT_DIR$/songwhip_bot/options.json" />
+      <option value="$PROJECT_DIR$/songwhip_bot/Options.cs" />
+      <option value="$PROJECT_DIR$/songwhip_bot/Program.cs" />
+      <option value="$PROJECT_DIR$/songwhip_bot/Utilities.cs" />
+      <option value="$PROJECT_DIR$/songwhip_bot/SongwhipCommands.cs" />
+    </changedPaths>
+  </component>
   <component name="ProjectId" id="1up4JQV2ZQ99OrkQ5hBDE3odLcX" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -20,6 +42,8 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.34979793" />
+    <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.0" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -56,6 +80,9 @@
       <option name="presentableId" value="Default" />
       <updated>1625349126225</updated>
       <workItem from="1625349129774" duration="15000" />
+      <workItem from="1625349513033" duration="186000" />
+      <workItem from="1625352066584" duration="322000" />
+      <workItem from="1625352437174" duration="311000" />
     </task>
     <task id="LOCAL-00001" summary="Renamed to correct name">
       <created>1625349138725</created>
@@ -64,13 +91,20 @@
       <option name="project" value="LOCAL" />
       <updated>1625349138725</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Added readme and preview">
+      <created>1625349590569</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1625349590569</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="UnityProjectConfiguration" hasMinimizedUI="null" />
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -82,10 +116,12 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="Renamed to correct name" />
-    <option name="LAST_COMMIT_MESSAGE" value="Renamed to correct name" />
+    <MESSAGE value="Added readme and preview" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added readme and preview" />
   </component>
 </project>

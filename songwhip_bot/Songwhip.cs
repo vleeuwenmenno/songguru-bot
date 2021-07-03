@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace DiscordCodBot
+namespace songwhip_bot
 {
     public class Links
     {

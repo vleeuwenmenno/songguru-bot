@@ -8,7 +8,7 @@ using DSharpPlus.SlashCommands;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 
-namespace DiscordCodBot
+namespace songwhip_bot
 {
     // Invite the bot with:
     // https://discord.com/api/oauth2/authorize?client_id=860899901020700684&permissions=2147764224&scope=applications.commands%20bot
@@ -23,7 +23,7 @@ namespace DiscordCodBot
         
         public async Task MainAsync()
         {
-            Console.WriteLine("Songwhip bot v1.0 starting ...");
+            Console.WriteLine($"Songwhip bot {Utilities.Version} starting ...");
             
             _options = Options.LoadConfig();
 

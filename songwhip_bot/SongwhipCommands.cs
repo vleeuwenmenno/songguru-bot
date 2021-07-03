@@ -7,11 +7,27 @@ using DSharpPlus.SlashCommands;
 using Newtonsoft.Json;
 using RestSharp;
 
-namespace DiscordCodBot
+namespace songwhip_bot
 {
     public class SongwhipCommands : SlashCommandModule
     {
         public Options _options { get; set; }
+        
+        [SlashCommand("about", "Some version info and who made the bot")]
+        public async Task About(InteractionContext ctx, [Option("song_link", "The song link from a streaming service to convert to a Songwhip link.")] string song_link)
+        {
+            DiscordWebhookBuilder builder = new DiscordWebhookBuilder();
+            var mainEmbed = new DiscordEmbedBuilder
+                {
+                    Color = DiscordColor.Purple,
+                    Description = "Bot made by (Menno van Leeuwen)[https://github.com/vleeuwenmenno]\nSongwhip made by (Wilson)[https://songwhip.com/faq]\n\nI would like to thank Wilson especially for making his API publicly available for everyone to use!\n\n(Add bot to your server)[https://discord.com/api/oauth2/authorize?client_id=860899901020700684&permissions=2147764224&scope=applications.commands%20bot] - (GitHub repository)[https://github.com/vleeuwenmenno/songwhip-bot]",
+                    Title = $"Songwhip bot {Utilities.Version}"
+                }.
+                WithFooter($"About requested by {ctx.Member.DisplayName}", ctx.Member.AvatarUrl);
+
+            builder.AddEmbed(mainEmbed.Build());
+            await ctx.EditResponseAsync(builder);
+        }
         
         [SlashCommand("songwhip", "Convert a song link to a Songwhip link (Spotify, Deezer, YouTube and more")]
         public async Task Songwhip(InteractionContext ctx, [Option("song_link", "The song link from a streaming service to convert to a Songwhip link.")] string song_link)
