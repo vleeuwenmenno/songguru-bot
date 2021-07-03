@@ -16,6 +16,7 @@ namespace songwhip_bot
         [SlashCommand("about", "Some version info and who made the bot")]
         public async Task About(InteractionContext ctx)
         {
+            await ctx.CreateResponseAsync(InteractionResponseType.DeferredChannelMessageWithSource);
             DiscordWebhookBuilder builder = new DiscordWebhookBuilder();
             var mainEmbed = new DiscordEmbedBuilder
                 {
