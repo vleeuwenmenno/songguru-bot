@@ -25,3 +25,24 @@ jobs:
     - name: Build project
       run: |
         dotnet publish songwhip_bot/songwhip_bot.csproj -c Release --runtime linux-x64 -p:PublishSingleFile=true --self-contained true -o build/
+        
+    - name: Deploy project
+      if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/production'
+      uses: marcodallasanta/ssh-scp-deploy@v1.0.4
+      with:
+        local: './build'
+        remote: '~/${{ steps.vars.outputs.short_ref }}'
+        host: ${{secrets.HOST}}
+        port: ${{secrets.PORT}}
+        user: ${{secrets.USER}}
+        key: ${{secrets.KEY}}
+        
+    - name: Setting up service
+      if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/production'
+      uses: garygrossgarten/github-action-ssh@v0.6.3
+      with:
+        command: sh ./${{ steps.vars.outputs.short_ref }}/build/deploy.sh ${{ steps.vars.outputs.short_ref }} ${{ steps.vars.outputs.sha_short }}
+        host: ${{ secrets.HOST }}
+        port: ${{ secrets.PORT }}
+        username: ${{ secrets.USER }}
+        privateKey: ${{ secrets.KEY}}
