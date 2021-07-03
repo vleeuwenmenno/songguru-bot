@@ -26,6 +26,11 @@ jobs:
       run: |
         dotnet publish songwhip_bot/songwhip_bot.csproj -c Release --runtime linux-x64 -p:PublishSingleFile=true --self-contained true -o build/
         
+    - name: Cleaning up & copying deployment script
+      if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/production'
+      run: |
+        ./pre-deploy.sh
+
     - name: Deploy project
       if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/production'
       uses: marcodallasanta/ssh-scp-deploy@v1.0.4
@@ -36,7 +41,7 @@ jobs:
         port: ${{secrets.PORT}}
         user: ${{secrets.USER}}
         key: ${{secrets.KEY}}
-        
+
     - name: Setting up service
       if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/production'
       uses: garygrossgarten/github-action-ssh@v0.6.3
