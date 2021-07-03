@@ -13,20 +13,19 @@ namespace songwhip_bot
     {
         public Options _options { get; set; }
         
-        [SlashCommand("about", "Some version info and who made the bot")]
-        public async Task About(InteractionContext ctx)
+        [SlashCommand("info", "About this bot, with thanks to Wilson!")]
+        public async Task Info(InteractionContext ctx)
         {
-            DiscordInteractionResponseBuilder builder = new DiscordInteractionResponseBuilder();
-            var mainEmbed = new DiscordEmbedBuilder
+            await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder()
+                .AddEmbed(new DiscordEmbedBuilder
                 {
                     Color = DiscordColor.Purple,
-                    Description = "Bot made by (Menno van Leeuwen)[https://github.com/vleeuwenmenno]\nSongwhip made by (Wilson)[https://songwhip.com/faq]\n\nI would like to thank Wilson especially for making his API publicly available for everyone to use!\n\n(Add bot to your server)[https://discord.com/api/oauth2/authorize?client_id=860899901020700684&permissions=2147764224&scope=applications.commands%20bot] - (GitHub repository)[https://github.com/vleeuwenmenno/songwhip-bot]",
+                    Description = "Bot made by [Menno van Leeuwen](https://github.com/vleeuwenmenno)\nSongwhip made by [Wilson](https://songwhip.com/faq)\n\nI would like to thank Wilson especially for making his API publicly available for everyone to use!\n\n[Add bot to your server](https://discord.com/api/oauth2/authorize?client_id=860899901020700684&permissions=2147764224&scope=applications.commands%20bot) - [GitHub repository](https://github.com/vleeuwenmenno/songwhip-bot)",
                     Title = $"Songwhip bot {Utilities.Version}"
                 }.
-                WithFooter($"About requested by {ctx.Member.DisplayName}", ctx.Member.AvatarUrl);
-
-            builder.AddEmbed(mainEmbed.Build());
-            await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, builder);
+                WithFooter($"About requested by {ctx.Member.DisplayName}", ctx.Member.AvatarUrl)
+                .Build())
+            );
         }
         
         [SlashCommand("songwhip", "Convert a song link to a Songwhip link (Spotify, Deezer, YouTube and more")]
