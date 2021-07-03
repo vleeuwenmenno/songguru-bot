@@ -14,7 +14,7 @@ namespace songwhip_bot
         public Options _options { get; set; }
         
         [SlashCommand("about", "Some version info and who made the bot")]
-        public async Task About(InteractionContext ctx, [Option("song_link", "The song link from a streaming service to convert to a Songwhip link.")] string song_link)
+        public async Task About(InteractionContext ctx)
         {
             DiscordWebhookBuilder builder = new DiscordWebhookBuilder();
             var mainEmbed = new DiscordEmbedBuilder
