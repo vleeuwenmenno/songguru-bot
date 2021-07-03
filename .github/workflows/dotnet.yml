@@ -1,0 +1,31 @@
+name: .NET
+
+on: [push, pull_request]
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        token: ${{ secrets.ACCESS_TOKEN }}
+        submodules: 'recursive'
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.202    
+
+    - name: Set variables
+      id: vars
+      run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/} && echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+
+    - name: Check variables
+      run: echo ${{ steps.vars.outputs.sha_short }} " - " ${{ steps.vars.outputs.short_ref }}
+
+    - name: Dotnet Restore
+      run: |
+        dotnet restore songwhip_bot/songwhip_bot.csproj
+    - name: Build project
+      run: |
+        dotnet publish songwhip_bot/songwhip_bot.csproj -c Release --runtime linux-x64 -p:PublishSingleFile=true --self-contained true -o build/
