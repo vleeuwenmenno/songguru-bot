@@ -16,8 +16,7 @@ namespace songwhip_bot
         [SlashCommand("about", "Some version info and who made the bot")]
         public async Task About(InteractionContext ctx)
         {
-            await ctx.CreateResponseAsync(InteractionResponseType.DeferredChannelMessageWithSource);
-            DiscordWebhookBuilder builder = new DiscordWebhookBuilder();
+            DiscordInteractionResponseBuilder builder = new DiscordInteractionResponseBuilder();
             var mainEmbed = new DiscordEmbedBuilder
                 {
                     Color = DiscordColor.Purple,
@@ -27,7 +26,7 @@ namespace songwhip_bot
                 WithFooter($"About requested by {ctx.Member.DisplayName}", ctx.Member.AvatarUrl);
 
             builder.AddEmbed(mainEmbed.Build());
-            await ctx.EditResponseAsync(builder);
+            await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, builder);
         }
         
         [SlashCommand("songwhip", "Convert a song link to a Songwhip link (Spotify, Deezer, YouTube and more")]
