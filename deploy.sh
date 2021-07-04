@@ -11,9 +11,12 @@ fi
 
 # Move SQL database if it exists & move the old live to the old folder
 if [ -d "live" ]; then
-    echo "Moving 'live' to 'previous_version' ..."
-
+    echo "Copying json files ..."
+    cp live/users-blacklist.json build/users-blacklist.json
+    cp live/guild-blacklist.json build/guild-blacklist.json
     cp live/options.json build/options.json
+
+    echo "Moving 'live' to 'previous_version' ..."
     mv live previous_version
 
     if [ -d "previous_version/cache" ]; then
