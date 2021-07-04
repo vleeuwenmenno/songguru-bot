@@ -9,7 +9,7 @@ namespace songwhip_bot
         {
             get
             {
-                string v = "v1.1.0";
+                string v = "v1.2.0";
                 if (File.Exists($"{Environment.CurrentDirectory}/BRANCH") && File.Exists($"{Environment.CurrentDirectory}/COMMIT"))
                 {
                     string hash = File.ReadAllText($"{Environment.CurrentDirectory}/COMMIT").Replace("\n", "");
