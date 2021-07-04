@@ -59,7 +59,7 @@ namespace songwhip_bot
                     .BuildServiceProvider()
             });
             
-            _slash.RegisterCommands<SongwhipCommands>(644532104578990101);
+            _slash.RegisterCommands<SongwhipCommands>();
             
             await _discord.ConnectAsync();
             Console.WriteLine("Songwhip bot is ready!");
@@ -77,6 +77,8 @@ namespace songwhip_bot
                 msg.StartsWith("https://open.spotify.com/") ||
                 msg.StartsWith("https://deezer.com/") ||
                 msg.StartsWith("https://www.deezer.com/") ||
+                msg.StartsWith("https://youtube.com/") ||
+                msg.StartsWith("https://www.youtube.com/") ||
                 msg.StartsWith("https://music.youtube.com/") ||
                 msg.StartsWith("https://music.apple.com/") ||
                 msg.StartsWith("https://tidal.com/") ||
@@ -87,21 +89,29 @@ namespace songwhip_bot
                     Console.WriteLine($"music link detected for {e.Message.Author.Username}#{e.Message.Author.Id} on {e.Guild.Name} ({e.Guild.Id}) but doing nothing because user opted-out~");
                     return;
                 }
-                
-                Console.WriteLine($"music link detected for {e.Message.Author.Username}#{e.Message.Author.Id} on {e.Guild.Name} ({e.Guild.Id})");
-                await e.Message.DeleteAsync();
-                DiscordEmbed embed = new DiscordEmbedBuilder
+
+                DiscordEmbed embed = null;
+                DiscordMessage loadingMsg = null;
+                if (!msg.StartsWith("https://youtube.com/") &&
+                    !msg.StartsWith("https://www.youtube.com/"))
                 {
-                    Color = DiscordColor.Blurple,
-                    Title = "Detected a music link",
-                    Description = "Just a moment while we try to resolve this music link for you ... "
-                }.Build();
-                DiscordMessage loadingMsg = await _discord.SendMessageAsync(e.Message.Channel, embed);
-                
+                    Console.WriteLine($"music link detected for {e.Message.Author.Username}#{e.Message.Author.Id} on {e.Guild.Name} ({e.Guild.Id})");
+                    await e.Message.DeleteAsync();
+                    embed = new DiscordEmbedBuilder
+                    {
+                        Color = DiscordColor.Blurple,
+                        Title = "Detected a music link",
+                        Description = "Just a moment while we try to resolve this music link for you ... "
+                    }.Build();
+                    loadingMsg = await _discord.SendMessageAsync(e.Message.Channel, embed);
+                }
+
                 string desc = "";
                 SongwhipInfo info = SongwhipCommands.GetSongwhip(msg);
 
-                if (info == null)
+                if (!msg.StartsWith("https://youtube.com/") &&
+                    !msg.StartsWith("https://www.youtube.com/") && 
+                    info == null)
                 {
                     embed = new DiscordEmbedBuilder
                     {
@@ -115,6 +125,8 @@ namespace songwhip_bot
                     await _discord.SendMessageAsync(e.Message.Channel, embed);
                     return;
                 }
+                else if (info == null)
+                    return;
 
                 desc = $"**Release date:** {info.ReleaseDate.ToString("dd-MM-yyyy")}\n**Track name:** {info.Name}\n**Artist:** {string.Join(" ", info.Artists.Select(x => x.Name))}\nListen on ";
                 
@@ -149,8 +161,15 @@ namespace songwhip_bot
                     }.
                     WithFooter($"Shared by {e.Author.Username}", e.Author.AvatarUrl).
                     WithAuthor($"{string.Join(" ", info.Artists.Select(x => x.Name))} - {info.Name}", info.Url, info.Artists.First().Image);
+
+                if (!msg.StartsWith("https://youtube.com/") &&
+                    !msg.StartsWith("https://www.youtube.com/"))
+                    await loadingMsg.DeleteAsync();
                 
-                await loadingMsg.DeleteAsync();
+                else
+                    await e.Message.DeleteAsync();
+                
+
                 await _discord.SendMessageAsync(e.Message.Channel, mainEmbed.Build());
                 Console.WriteLine($"   Request fulfilled with data! :D");
             }
