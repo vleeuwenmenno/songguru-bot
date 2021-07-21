@@ -4,7 +4,7 @@
     <projectFile>songwhip_bot/songwhip_bot.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4e905cea-65c9-4443-a8ff-b5e2a2daebba" name="Default Changelist" comment="">
+    <list default="true" id="4e905cea-65c9-4443-a8ff-b5e2a2daebba" name="Default Changelist" comment="Added a save exit event to close Discord connection&#10;Updated workspace.xml">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.songwhip_bot/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.songwhip_bot/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/songwhip_bot/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/songwhip_bot/Program.cs" afterDir="false" />
     </list>
@@ -34,6 +34,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/576BEC19-D8AC-4AB7-9D98-CD1623F32A17/228/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6C265912-2270-4DAB-A9F1-4E1A2FBBD3E7/51/9b2f59e9/DiscordMessage.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/AC289764-4DA6-4F17-B894-D2F23492B902/A/HttpWebRequest.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///home/menno/Projects/songwhip_bot/songwhip_bot/Program.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0A338F13-0CFB-4F0D-B52C-EDCC5E65FCAB/bf/3dcc0445/TableAttribute.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
@@ -104,7 +105,7 @@
       <workItem from="1625423809811" duration="2664000" />
       <workItem from="1625426542687" duration="493000" />
       <workItem from="1626365507936" duration="761000" />
-      <workItem from="1626866907645" duration="418000" />
+      <workItem from="1626866907645" duration="1632000" />
     </task>
     <task id="LOCAL-00001" summary="Renamed to correct name">
       <created>1625349138725</created>
@@ -176,7 +177,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625427025466</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Added a save exit event to close Discord connection&#10;Updated workspace.xml">
+      <created>1626867552153</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1626867552153</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -208,6 +216,7 @@
     <MESSAGE value="Added support for auto-resolving music links" />
     <MESSAGE value="Increased version number" />
     <MESSAGE value="Added support for youtube, but it checks if its even music before notifying anyone." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added support for youtube, but it checks if its even music before notifying anyone." />
+    <MESSAGE value="Added a save exit event to close Discord connection&#10;Updated workspace.xml" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added a save exit event to close Discord connection&#10;Updated workspace.xml" />
   </component>
 </project>

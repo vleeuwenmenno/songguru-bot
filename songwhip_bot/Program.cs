@@ -15,7 +15,7 @@ namespace songwhip_bot
 {
     // Invite the bot with:
     // DEVELOPER BOT: https://discord.com/oauth2/authorize?client_id=861018175935873054&permissions=2147837952&scope=bot%20applications.commands
-    // LIVE BOT: https://discord.com/api/oauth2/authorize?client_id=860899901020700684&permissions=2147764224&scope=applications.commands%20bot
+    // LIVE BOT: https://discord.com/api/oauth2/authorize?client_id=860899901020700684&permissions=2147870784&scope=bot%20applications.commands
     public class Program
     {
         public static Options _options;
