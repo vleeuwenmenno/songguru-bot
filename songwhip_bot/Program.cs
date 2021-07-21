@@ -14,18 +14,26 @@ using Newtonsoft.Json;
 namespace songwhip_bot
 {
     // Invite the bot with:
-    // https://discord.com/api/oauth2/authorize?client_id=860899901020700684&permissions=2147764224&scope=applications.commands%20bot
+    // DEVELOPER BOT: https://discord.com/oauth2/authorize?client_id=861018175935873054&permissions=2147837952&scope=bot%20applications.commands
+    // LIVE BOT: https://discord.com/api/oauth2/authorize?client_id=860899901020700684&permissions=2147764224&scope=applications.commands%20bot
     public class Program
     {
         public static Options _options;
         public static DiscordClient _discord;
         public SlashCommandsExtension _slash;
 
+        static void OnProcessExit (object sender, EventArgs e)
+        {
+            _discord.DisconnectAsync();
+            Console.WriteLine($"Songwhip bot {Utilities.Version} closing shop ~");
+        }
+        
         static void Main(string[] args) =>
             new Program().MainAsync().GetAwaiter().GetResult();
         
         public async Task MainAsync()
         {
+            AppDomain.CurrentDomain.ProcessExit += new EventHandler (OnProcessExit); 
             Console.WriteLine($"Songwhip bot {Utilities.Version} starting ...");
             
             _options = Options.LoadConfig();
