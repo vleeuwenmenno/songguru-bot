@@ -123,10 +123,12 @@ namespace songwhip_bot
                 {
                     embed = new DiscordEmbedBuilder
                     {
-                        Color = DiscordColor.DarkRed,
-                        Title = "Not found~",
-                        Description = $"We couldn't find anything with this music link, maybe it's too new or you might have a unconventional music style? :upsidedown:\n[Original link]({msg})"
-                    }.Build();
+                        Color = DiscordColor.DarkBlue,
+                        Title = $"{e.Author.Username} shared a music link ...",
+                        Description = $"We couldn't find anything with this music link on Songwhip but maybe it's too new or you might have a unconventional music style?\n[Original music link]({msg})"
+                    }
+                    .WithFooter($"Shared by {e.Author.Username}", e.Author.AvatarUrl)
+                    .Build();
                     
                     Console.WriteLine($"   Request fulfilled with 404 :(");
                     await loadingMsg.DeleteAsync();
