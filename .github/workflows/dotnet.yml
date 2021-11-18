@@ -21,10 +21,10 @@ jobs:
 
     - name: Dotnet Restore
       run: |
-        dotnet restore songwhip_bot/songwhip_bot.csproj
+        dotnet restore songshizz_bot/songshizz_bot.csproj
     - name: Build project
       run: |
-        dotnet publish songwhip_bot/songwhip_bot.csproj -c Release --runtime linux-x64 -p:PublishSingleFile=true --self-contained true -o build/
+        dotnet publish songshizz_bot/songshizz_bot.csproj -c Release --runtime linux-x64 -p:PublishSingleFile=true --self-contained true -o build/
         
     - name: Cleaning up & copying deployment script
       if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/production'
