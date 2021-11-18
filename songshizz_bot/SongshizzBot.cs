@@ -47,6 +47,21 @@ namespace SongshizzBot
                     await PostFailEmbed(e, discord);
                 }
             }
+            else if (Utilities.IsDeezerPlaylist(link))
+            {
+                string playlistId = link.Split("/playlist/")[1].Split('?')[0];
+                try
+                {
+                    DeezerPlaylist info = await DeezerPlaylist.ScrapeInfo(playlistId);
+                    
+                    if (!await PostEmbed(info, e, discord))
+                        await PostFailEmbed(e, discord);
+                }
+                catch (APIException)
+                {
+                    await PostFailEmbed(e, discord);
+                }
+            }
             else
             {
                 Tuple<SongwhipInfo, DiscordMessage> result = await FetchSongwhipInfo(e, discord);
@@ -77,6 +92,26 @@ namespace SongshizzBot
             await discord.SendMessageAsync(e.Message.Channel, embed);
         }
 
+        private static async Task<bool> PostEmbed(DeezerPlaylist info, MessageCreateEventArgs e, DiscordClient discord)
+        {
+            string link = Utilities.ExtractLink(e.Message.Content);
+            
+            if (info == null)
+                return false;
+
+            DiscordEmbedBuilder mainEmbed = new DiscordEmbedBuilder
+                {
+                    ImageUrl = info.imageUrl,
+                    Color = DiscordColor.Purple,
+                    Description = BuildDescription(info, link)
+                }
+                .WithFooter($"Shared by {e.Author.Username}", e.Author.AvatarUrl)
+                .WithAuthor($"Deezer playlist - {info.title}", link, info.imageUrl);
+
+            await discord.SendMessageAsync(e.Message.Channel, mainEmbed.Build());
+            return true;
+        }
+        
         private static async Task<bool> PostEmbed(SongwhipInfo info, MessageCreateEventArgs e, DiscordClient discord)
         {
             string link = Utilities.ExtractLink(e.Message.Content);
@@ -181,6 +216,18 @@ namespace SongshizzBot
             desc += $"\n{new Converter().Convert(info.Description)}\n";
             desc += $"\n** Tracks: ** {info.Tracks.Total}";
             desc += $"\n** Creator: ** {info.Owner.DisplayName}";
+            
+            desc += $"\n\n🔗 [Open playlist]({link})\n";
+            return desc;
+        }
+        
+        private static string BuildDescription(DeezerPlaylist info, string originalMessage)
+        {
+            string link = Utilities.ExtractLink(originalMessage);
+            string desc = $"";
+
+            desc += $"\n{new Converter().Convert(info.description)}\n";
+            desc += $"\n** Creator: ** {new Converter().Convert(info.creator)}";
             
             desc += $"\n\n🔗 [Open playlist]({link})\n";
             return desc;

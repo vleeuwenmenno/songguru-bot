@@ -79,7 +79,17 @@ namespace SongshizzBot
 
         public static bool IsSpotifyPlaylist(string msg)
         {
-            return IsLinkMessage(msg) && msg.Contains("/playlist/");
+            return msg.StartsWith("https://www.spotify.com/") ||
+                   msg.StartsWith("https://spotify.com/") ||
+                   msg.StartsWith("https://open.spotify.com/") && 
+                   msg.Contains("/playlist/");
+        }
+
+        public static bool IsDeezerPlaylist(string msg)
+        {
+            return msg.StartsWith("https://deezer.com/") ||
+                   msg.StartsWith("https://www.deezer.com/") && 
+                   msg.Contains("/playlist/");
         }
     }
 }

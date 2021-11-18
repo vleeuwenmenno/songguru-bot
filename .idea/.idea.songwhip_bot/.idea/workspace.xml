@@ -7,26 +7,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4e905cea-65c9-4443-a8ff-b5e2a2daebba" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/songshizz_bot/Program.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/songshizz_bot/SongshizzBot.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/songshizz_bot/Songwhip/Models/Artist.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/songshizz_bot/Songwhip/Models/HasLinks.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/songshizz_bot/Songwhip/Models/Links.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/songshizz_bot/Songwhip/Models/ServiceIds.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/songshizz_bot/Songwhip/Models/ServiceLink.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/songshizz_bot/Songwhip/Models/SongwhipInfo.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/songshizz_bot/Songwhip/SongwhipApi.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/songshizz_bot/songshizz_bot.csproj" afterDir="false" />
+    <list default="true" id="4e905cea-65c9-4443-a8ff-b5e2a2daebba" name="Default Changelist" comment="Added changelog">
+      <change afterPath="$PROJECT_DIR$/songshizz_bot/DeezerPlaylist.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.songwhip_bot/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.songwhip_bot/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/songwhip_bot.sln" beforeDir="false" afterPath="$PROJECT_DIR$/songwhip_bot.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/songwhip_bot/Blacklist.cs" beforeDir="false" afterPath="$PROJECT_DIR$/songshizz_bot/Helpers/Blacklist.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/songwhip_bot/Options.cs" beforeDir="false" afterPath="$PROJECT_DIR$/songshizz_bot/Helpers/Options.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/songwhip_bot/Program.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/songwhip_bot/Songwhip.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/songwhip_bot/SongwhipCommands.cs" beforeDir="false" afterPath="$PROJECT_DIR$/songshizz_bot/SongwhipCommands.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/songwhip_bot/Utilities.cs" beforeDir="false" afterPath="$PROJECT_DIR$/songshizz_bot/Helpers/Utilities.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/songwhip_bot/songwhip_bot.csproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/songshizz_bot/Helpers/Utilities.cs" beforeDir="false" afterPath="$PROJECT_DIR$/songshizz_bot/Helpers/Utilities.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/songshizz_bot/SongshizzBot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/songshizz_bot/SongshizzBot.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,16 +35,23 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/songshizz_bot/Program.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d41b27bcd2d44ecc8131e71b50d4bd0533800/25/9bdbf8aa/FullPlaylist.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/90f759db8113d19fb412ddf678b2a5d6d243ed115611175dadd1bcb89eee4f/TaskAwaiter.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/menno/Projects/Personal/songshizz-bot/songshizz_bot/SongwhipCommands.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/songshizz_bot/SongwhipCommands.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bcae882191178c8bf44c9add4cdeffa874a7afe629e3e56e9280f5896e953425/Monitor.CoreCLR.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/37b0f5671c9ec5e0ebfa36442083cfb16b96f66ee5f50de616884d61ab49c1f/Tuple.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/fc0f0ef59e6f9238a079c7f68ddac0d8af131cdc2d1fcc5080bfb0958f3e7/RestClient.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/songshizz_bot/Program.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d41b27bcd2d44ecc8131e71b50d4bd0533800/25/9bdbf8aa/FullPlaylist.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/menno/Projects/Personal/songshizz-bot/songshizz_bot/Helpers/Utilities.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bcae882191178c8bf44c9add4cdeffa874a7afe629e3e56e9280f5896e953425/Monitor.CoreCLR.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8fd367c5efb84319812ae42eefae31c614b600/b4/5996d4c2/DiscordEmoji.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
@@ -145,7 +137,7 @@
       <workItem from="1637158872867" duration="6227000" />
       <workItem from="1637250690292" duration="1307000" />
       <workItem from="1637252016611" duration="505000" />
-      <workItem from="1637252556050" duration="6535000" />
+      <workItem from="1637252556050" duration="10393000" />
     </task>
     <task id="LOCAL-00001" summary="Renamed to correct name">
       <created>1625349138725</created>
@@ -224,7 +216,42 @@
       <option name="project" value="LOCAL" />
       <updated>1626867552153</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Refactored entire codebase&#10;Renamed to Songshizz &#10;Streamlined entire resolver flow&#10;Added support for Spotify playlists&#10;Removed /songwhip command as resolver should work fine">
+      <created>1637259387715</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1637259387715</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Updated workflow to use .NET 6.0">
+      <created>1637259464396</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1637259464396</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Updated workflow to use correct folders">
+      <created>1637259652996</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1637259652996</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Updated version numbering">
+      <created>1637259783065</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1637259783065</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Added changelog">
+      <created>1637260042758</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1637260042758</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -257,12 +284,34 @@
     <MESSAGE value="Increased version number" />
     <MESSAGE value="Added support for youtube, but it checks if its even music before notifying anyone." />
     <MESSAGE value="Added a save exit event to close Discord connection&#10;Updated workspace.xml" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added a save exit event to close Discord connection&#10;Updated workspace.xml" />
+    <MESSAGE value="Refactored entire codebase&#10;Renamed to Songshizz &#10;Streamlined entire resolver flow&#10;Added support for Spotify playlists&#10;Removed /songwhip command as resolver should work fine" />
+    <MESSAGE value="Updated workflow to use .NET 6.0" />
+    <MESSAGE value="Updated workflow to use correct folders" />
+    <MESSAGE value="Updated version numbering" />
+    <MESSAGE value="Added changelog" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added changelog" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/songshizz_bot/SongshizzBot.cs</url>
+          <line>56</line>
+          <properties documentPath="$PROJECT_DIR$/songshizz_bot/SongshizzBot.cs" initialLine="56" containingFunctionPresentation="method 'ProcessMessage'">
+            <startOffsets>
+              <option value="1775" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1814" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="38" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="DotNetProject">
-        <watch expression="link.Split(&quot;/playlist/&quot;)[1].Split('!')[0]" language="C#" />
+        <watch expression="body.Split(&quot;&lt;h1 class=\&quot;heading-1\&quot; id=\&quot;naboo_playlist_title\&quot; itemprop=\&quot;name\&quot;&gt;&quot;)[1].Split(&quot;&lt;/h1&gt;&quot;)[0]" language="C#" />
       </configuration>
     </watches-manager>
   </component>
