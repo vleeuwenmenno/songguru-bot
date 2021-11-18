@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "songwhip_bot", "songwhip_bot\songwhip_bot.csproj", "{92F7A3BF-F734-4216-A540-1D679D589492}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "songshizz_bot", "songshizz_bot\songshizz_bot.csproj", "{92F7A3BF-F734-4216-A540-1D679D589492}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 
-namespace songwhip_bot
+namespace SongshizzBot.Helpers
 {
     public class Blacklist
     {

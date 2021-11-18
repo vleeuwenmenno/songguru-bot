@@ -3,13 +3,13 @@ using System.IO;
 using Newtonsoft.Json;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
-namespace songwhip_bot
+namespace SongshizzBot.Helpers
 {
     public class Options
     {
-        public string botToken { get; set; }
-        public string songwhipEndpoint { get; set; }
-        public ulong guildId { get; set; }
+        public string BotToken { get; set; }
+        public string SpotifyToken { get; set; }
+        public ulong GuildId { get; set; }
 
         public static Options LoadConfig()
         {
@@ -19,8 +19,9 @@ namespace songwhip_bot
             Console.WriteLine("Missing config file! Please restart the bot and fill the `botToken` with your token!");
             File.WriteAllText(Environment.CurrentDirectory + "/options.json", JsonConvert.SerializeObject(new Options()
             {
-                songwhipEndpoint = "https://songwhip.com/",
-                botToken = "TOKEN_HERE!"
+                BotToken = "TOKEN_HERE!",
+                SpotifyToken = "SPOTIFY_CLIENT_SECRET_HERE!",
+                GuildId = 0
             }, Formatting.Indented));
             Environment.Exit(-404);
             return null;
