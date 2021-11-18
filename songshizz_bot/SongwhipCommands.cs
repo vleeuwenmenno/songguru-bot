@@ -18,7 +18,7 @@ namespace SongshizzBot
 {
     public class SongshizzCommands : SlashCommandModule
     {
-        [SlashCommand("info", "About this bot, with thanks to Wilson!")]
+        [SlashCommand("info", "About this bot ...")]
         public async Task Info(InteractionContext ctx)
         {
             await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder()
@@ -26,6 +26,21 @@ namespace SongshizzBot
                     {
                         Color = DiscordColor.Purple,
                         Description = "Songshizz bot made by [Menno van Leeuwen](https://github.com/vleeuwenmenno)\nSongwhip made by [Wilson](https://songwhip.com/faq)\n\nI would like to thank Wilson especially for making his API publicly available for everyone to use!\n\n[Add bot to your server](https://discord.com/api/oauth2/authorize?client_id=860899901020700684&permissions=2147837952&scope=bot%20applications.commands) - [GitHub repository](https://github.com/vleeuwenmenno/songwhip-bot)",
+                        Title = $"Songshizz bot {Utilities.Version}"
+                    }.
+                    WithFooter($"About requested by {ctx.Member.DisplayName}", ctx.Member.AvatarUrl)
+                    .Build())
+            );
+        }
+        
+        [SlashCommand("changelog", "Changelogs about the bot")]
+        public async Task ChangeLog(InteractionContext ctx)
+        {
+            await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder()
+                .AddEmbed(new DiscordEmbedBuilder
+                    {
+                        Color = DiscordColor.Purple,
+                        Description = "** Major update v1.3.1 **\n> - Renamed the bot to Songshizz\n> - Streamlined resolver flow to be more efficient and improved code readability.\n> - Added support for Spotify playlists\n> -Updated codebase to run on .NET 6.0\n> - Added this changelog command.\n",
                         Title = $"Songshizz bot {Utilities.Version}"
                     }.
                     WithFooter($"About requested by {ctx.Member.DisplayName}", ctx.Member.AvatarUrl)
