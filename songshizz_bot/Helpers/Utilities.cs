@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using DSharpPlus;
 using DSharpPlus.EventArgs;
 using SongshizzBot.Helpers;
 
@@ -13,7 +14,7 @@ namespace SongshizzBot
         {
             get
             {
-                string v = "v1.3.1";
+                string v = "v1.4.0";
                 if (File.Exists($"{Environment.CurrentDirectory}/BRANCH") && File.Exists($"{Environment.CurrentDirectory}/COMMIT"))
                 {
                     string hash = File.ReadAllText($"{Environment.CurrentDirectory}/COMMIT").Replace("\n", "");
@@ -26,12 +27,20 @@ namespace SongshizzBot
             }
         }
         
-        public static bool IsBlackListed(MessageCreateEventArgs e)
+        /// <summary>
+        /// Checks if the requesting user has mentioning mode enabled and/or has properly mentioned the current bot user id.
+        /// </summary>
+        /// <param name="e">Message event arguments</param>
+        /// <param name="discord">Discord client interface</param>
+        /// <returns>Returns true unless mentioning mode is disabled or mentioning mode is enabled but the message contained a valid mention to the current bot user id.</returns>
+        public static bool IsMentioningMode(MessageCreateEventArgs e, DiscordClient discord)
         {
-            if (Blacklist.userBlacklist.Any(x => x == e.Message.Author.Id))
+            if (Blacklist.userMentionMode.Any(x => x == e.Message.Author.Id))
             {
-                Console.WriteLine(
-                    $"music link detected for {e.Message.Author.Username}#{e.Message.Author.Id} on {e.Guild.Name} ({e.Guild.Id}) but doing nothing because user opted-out~");
+                if (e.Message.Content.Contains($"<@!{discord.CurrentUser.Id}>"))
+                    return false;
+                
+                Console.WriteLine($"music link detected for {e.Message.Author.Username}#{e.Message.Author.Id} on {e.Guild.Name} ({e.Guild.Id}) but doing nothing because user has mentioning mode enabled but didn't mention the bot~");
                 return true;
             }
 

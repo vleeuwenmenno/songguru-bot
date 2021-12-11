@@ -40,48 +40,53 @@ namespace SongshizzBot
                 .AddEmbed(new DiscordEmbedBuilder
                     {
                         Color = DiscordColor.Purple,
-                        Description = "** Major update v1.3.1 **\n> - Renamed the bot to Songshizz\n> - Streamlined resolver flow to be more efficient and improved code readability.\n> - Added support for Spotify playlists\n> -Updated codebase to run on .NET 6.0\n> - Added this changelog command.\n",
+                        Description = "** Update v1.4.0 **\n> - Replaced opt-in/opt-out with mention mode. Now you can make the bot resolve only when you really want it to!\n** Major update v1.3.1 **\n> - Renamed the bot to Songshizz\n> - Streamlined resolver flow to be more efficient and improved code readability.\n> - Added support for Spotify playlists\n> -Updated codebase to run on .NET 6.0\n> - Added this changelog command.\n",
                         Title = $"Songshizz bot {Utilities.Version}"
                     }.
                     WithFooter($"About requested by {ctx.Member.DisplayName}", ctx.Member.AvatarUrl)
                     .Build())
             );
         }
-        
-        [SlashCommand("opt-in", "Enable auto-resolving music links for yourself. Songshizz bot will try resolve your music links.")]
-        public async Task OptIn(InteractionContext ctx)
+
+        [SlashCommand("toggle-mode",
+            "Toggle between mentioning or auto-resolving music links mode.")]
+        public async Task ToggleMode(InteractionContext ctx)
         {
-            Blacklist.userBlacklist.RemoveAll(x => x == ctx.Member.Id);
-            Blacklist.Save();
+            if (Blacklist.userMentionMode.Any(x => ctx.Member.Id == x))
+            {
+                Blacklist.userMentionMode.RemoveAll(x => x == ctx.Member.Id);
+                Blacklist.Save();
+
+                await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                    new DiscordInteractionResponseBuilder()
+                        .AddEmbed(new DiscordEmbedBuilder
+                            {
+                                Color = DiscordColor.DarkGreen,
+                                Description =
+                                    "You've been opted in of auto-resolving music links. <a:Happy:395314894364213248>\nThis means your links will be resolved automatically unless you mention Songshizz then the bot will ignore you.",
+                                Title = $"Mode toggled to auto-resolving"
+                            }
+                            .WithFooter($"Toggle mode requested by {ctx.Member.DisplayName}", ctx.Member.AvatarUrl)
+                            .Build())
+                );
+            }
+            else
+            {
+                Blacklist.userMentionMode.Add(ctx.Member.Id);
+                Blacklist.Save();
             
-            await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder()
-                .AddEmbed(new DiscordEmbedBuilder
-                    {
-                        Color = DiscordColor.DarkGreen,
-                        Description = "You've been opted in of auto-resolving music links. <a:Happy:395314894364213248>",
-                        Title = $"Opted in~"
-                    }.
-                    WithFooter($"Opt-in requested by {ctx.Member.DisplayName}", ctx.Member.AvatarUrl)
-                    .Build())
-            );
-        }
-        
-        [SlashCommand("opt-out", "Disable auto-resolving music links for yourself. Songshizz bot won't bother you ever again!")]
-        public async Task OptOut(InteractionContext ctx)
-        {
-            Blacklist.userBlacklist.Add(ctx.Member.Id);
-            Blacklist.Save();
-            
-            await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder()
-                .AddEmbed(new DiscordEmbedBuilder
-                    {
-                        Color = DiscordColor.DarkRed,
-                        Description = "You've been opted out of auto-resolving music links. <a:Sad:395314892485296148>",
-                        Title = $"Opted out~"
-                    }.
-                    WithFooter($"Opt-out requested by {ctx.Member.DisplayName}", ctx.Member.AvatarUrl)
-                    .Build())
-            );
+                await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder()
+                    .AddEmbed(new DiscordEmbedBuilder
+                        {
+                            Color = DiscordColor.DarkGreen,
+                            Description =
+                                "You've been opted in of mention resolving music links. <a:Happy:395314894364213248>\nThis means your links will not be resolved automatically unless you mention Songshizz then the bot will try to resolve the provided link.",
+                            Title = $"Mode toggled to mention-resolving"
+                        }
+                        .WithFooter($"Toggle mode requested by {ctx.Member.DisplayName}", ctx.Member.AvatarUrl)
+                        .Build())
+                );
+            }
         }
     }
 }

@@ -24,7 +24,7 @@ namespace SongshizzBot
             if (!Utilities.IsLinkMessage(link))
                 return;
 
-            if (Utilities.IsBlackListed(e))
+            if (Utilities.IsMentioningMode(e, discord))
                 return;
 
             if (!Utilities.IsYouTubeLink(link))
