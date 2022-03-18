@@ -1,5 +1,7 @@
+version: "3"
 services:
   songshizz-bot:
+    restart: unless-stopped
     container_name: songshizz-bot
     image: "stardebris/songshizz-bot"
     environment:
