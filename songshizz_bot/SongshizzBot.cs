@@ -115,7 +115,7 @@ namespace SongshizzBot
             var msg = new DiscordMessageBuilder()
                 .WithEmbed(mainEmbed)
                 .AddComponents(
-                    new DiscordLinkButtonComponent(link, "Deezer", false, new DiscordComponentEmoji(DiscordEmoji.FromName(discord, ":musical_note:")))
+                    new DiscordLinkButtonComponent(link, "Open playlist", false, new DiscordComponentEmoji(DiscordEmoji.FromName(discord, ":musical_note:")))
                 );
             
             await e.Message.Channel.SendMessageAsync(msg);
@@ -141,7 +141,7 @@ namespace SongshizzBot
             var msg = new DiscordMessageBuilder()
                 .WithEmbed(mainEmbed)
                 .AddComponents(
-                    new DiscordLinkButtonComponent(link, "Spotify", false, new DiscordComponentEmoji(DiscordEmoji.FromName(discord, ":musical_note:")))
+                    new DiscordLinkButtonComponent(link, "Open playlist", false, new DiscordComponentEmoji(DiscordEmoji.FromName(discord, ":musical_note:")))
                 );
             
             await e.Message.Channel.SendMessageAsync(msg);
@@ -226,8 +226,6 @@ namespace SongshizzBot
             if (info.Links.Tidal)
                 desc += "<:tidal:860992188434612245> ";
 
-            desc += $"\n\n🔗 [Streaming services]({info.Url})";
-            desc += $"\n🔗 [Original link]({link})\n";
             return desc;
         }
         
@@ -240,7 +238,6 @@ namespace SongshizzBot
             desc += $"\n** Tracks: ** {info.Tracks.Total}";
             desc += $"\n** Creator: ** {info.Owner.DisplayName}";
             
-            desc += $"\n\n🔗 [Open playlist]({link})\n";
             return desc;
         }
         
