@@ -19,8 +19,7 @@ namespace SongshizzBot
             if (e.Author.Id == discord.CurrentUser.Id)
                 return;
             
-            string link = Utilities.ExtractLink(e.Message.Content);
-
+            var link = Utilities.ExtractLink(e.Message.Content);
             if (!Utilities.IsLinkMessage(link))
                 return;
 
@@ -32,7 +31,7 @@ namespace SongshizzBot
 
             if (Utilities.IsSpotifyPlaylist(link))
             {
-                string playlistId = link.Split("/playlist/")[1].Split('?')[0];
+                var playlistId = link.Split("/playlist/")[1].Split('?')[0];
                 var config = SpotifyClientConfig.CreateDefault();
                 var request = new ClientCredentialsRequest(Environment.GetEnvironmentVariable("SPOTIFY_CLIENT_TOKEN") ?? string.Empty, Environment.GetEnvironmentVariable("SPOTIFY_CLIENT_SECRET") ?? string.Empty);
                 var response = await new OAuthClient(config).RequestToken(request);
@@ -40,8 +39,7 @@ namespace SongshizzBot
 
                 try
                 {
-                    FullPlaylist playlist = await spotify.Playlists.Get(playlistId);
-                    
+                    var playlist = await spotify.Playlists.Get(playlistId);
                     if (!await PostEmbed(playlist, e, discord))
                         await PostFailEmbed(e, discord);
                 }
@@ -52,11 +50,10 @@ namespace SongshizzBot
             }
             else if (Utilities.IsDeezerPlaylist(link))
             {
-                string playlistId = link.Split("/playlist/")[1].Split('?')[0];
+                var playlistId = link.Split("/playlist/")[1].Split('?')[0];
                 try
                 {
-                    DeezerPlaylist info = await DeezerPlaylist.ScrapeInfo(playlistId);
-                    
+                    var info = await DeezerPlaylist.ScrapeInfo(playlistId);
                     if (!await PostEmbed(info, e, discord))
                         await PostFailEmbed(e, discord);
                 }
@@ -67,23 +64,22 @@ namespace SongshizzBot
             }
             else
             {
-                Tuple<SongwhipInfo, DiscordMessage> result = await FetchSongwhipInfo(e, discord);
-
-                if (!await PostEmbed(result.Item1, e, discord))
+                var (info, discordMessage) = await FetchSongwhipInfo(e, discord);
+                if (!await PostEmbed(info, e, discord))
                     await PostFailEmbed(e, discord);
                 
                 if (!Utilities.IsYouTubeLink(link))
-                    await result.Item2.DeleteAsync();
+                    await discordMessage.DeleteAsync();
             }
         }
 
         private static async Task PostFailEmbed(MessageCreateEventArgs e, DiscordClient discord)
         {
-            string link = Utilities.ExtractLink(e.Message.Content);
+            var link = Utilities.ExtractLink(e.Message.Content);
             if (Utilities.IsYouTubeLink(link))
                 return;
             
-            DiscordEmbed embed = new DiscordEmbedBuilder
+            var mainEmbed = new DiscordEmbedBuilder
                 {
                     Color = DiscordColor.DarkBlue,
                     Title = $"{e.Author.Username} shared a music link ...",
@@ -92,17 +88,22 @@ namespace SongshizzBot
                 .WithFooter($"Shared by {e.Author.Username}", e.Author.AvatarUrl)
                 .Build();
             
-            await discord.SendMessageAsync(e.Message.Channel, embed);
+            var msg = new DiscordMessageBuilder()
+                .WithEmbed(mainEmbed)
+                .AddComponents(
+                    new DiscordLinkButtonComponent(link, "Original link", false, new DiscordComponentEmoji(DiscordEmoji.FromName(discord, ":musical_note:")))
+                );
+            
+            await e.Message.Channel.SendMessageAsync(msg);
         }
 
         private static async Task<bool> PostEmbed(DeezerPlaylist info, MessageCreateEventArgs e, DiscordClient discord)
         {
-            string link = Utilities.ExtractLink(e.Message.Content);
-            
+            var link = Utilities.ExtractLink(e.Message.Content);
             if (info == null)
                 return false;
 
-            DiscordEmbedBuilder mainEmbed = new DiscordEmbedBuilder
+            var mainEmbed = new DiscordEmbedBuilder
                 {
                     ImageUrl = info.imageUrl,
                     Color = DiscordColor.Purple,
@@ -111,20 +112,53 @@ namespace SongshizzBot
                 .WithFooter($"Shared by {e.Author.Username}", e.Author.AvatarUrl)
                 .WithAuthor($"Deezer playlist - {info.title}", link, info.imageUrl);
 
-            await discord.SendMessageAsync(e.Message.Channel, mainEmbed.Build());
+            var msg = new DiscordMessageBuilder()
+                .WithEmbed(mainEmbed)
+                .AddComponents(
+                    new DiscordLinkButtonComponent(link, "Deezer", false, new DiscordComponentEmoji(DiscordEmoji.FromName(discord, ":musical_note:")))
+                );
+            
+            await e.Message.Channel.SendMessageAsync(msg);
+            return true;
+        }
+        
+        private static async Task<bool> PostEmbed(FullPlaylist info, MessageCreateEventArgs e, DiscordClient discord)
+        {
+            var link = Utilities.ExtractLink(e.Message.Content);
+            if (info == null)
+                return false;
+
+            var ownerImage = info.Owner.Images == null ? info.Images.First().Url : info.Owner.Images.First().Url;
+            var mainEmbed = new DiscordEmbedBuilder
+                {
+                    ImageUrl = info.Images.First().Url,
+                    Color = DiscordColor.Purple,
+                    Description = BuildDescription(info, link)
+                }
+                .WithFooter($"Shared by {e.Author.Username}", e.Author.AvatarUrl)
+                .WithAuthor($"Spotify playlist - {info.Name}", info.Href, ownerImage);
+
+            var msg = new DiscordMessageBuilder()
+                .WithEmbed(mainEmbed)
+                .AddComponents(
+                    new DiscordLinkButtonComponent(link, "Spotify", false, new DiscordComponentEmoji(DiscordEmoji.FromName(discord, ":musical_note:")))
+                );
+            
+            await e.Message.Channel.SendMessageAsync(msg);
             return true;
         }
         
         private static async Task<bool> PostEmbed(SongwhipInfo info, MessageCreateEventArgs e, DiscordClient discord)
         {
-            string link = Utilities.ExtractLink(e.Message.Content);
+            var link = Utilities.ExtractLink(e.Message.Content);
             if (info == null)
                 return false;
 
             if (Utilities.IsYouTubeLink(link)) // If it is a YouTube link and we got this far it probably means we managed to find a album/artist/song link for it.
                 await e.Message.DeleteAsync();
 
-            DiscordEmbedBuilder mainEmbed = new DiscordEmbedBuilder
+
+            var mainEmbed = new DiscordEmbedBuilder
                 {
                     ImageUrl = info.Image,
                     Color = DiscordColor.Purple,
@@ -134,28 +168,14 @@ namespace SongshizzBot
                 .WithAuthor($"{string.Join(" ", info.Artists.Select(x => x.Name))} - {info.Name}", info.Url,
                     info.Artists.First().Image);
 
-            await discord.SendMessageAsync(e.Message.Channel, mainEmbed.Build());
-            return true;
-        }
-        
-        private static async Task<bool> PostEmbed(FullPlaylist info, MessageCreateEventArgs e, DiscordClient discord)
-        {
-            string link = Utilities.ExtractLink(e.Message.Content);
+            var msg = new DiscordMessageBuilder()
+                .WithEmbed(mainEmbed)
+                .AddComponents(
+                    new DiscordLinkButtonComponent(info.Url, "Streaming services", false, new DiscordComponentEmoji(DiscordEmoji.FromName(discord, ":link:"))),
+                    new DiscordLinkButtonComponent(link, "Original link", false, new DiscordComponentEmoji(DiscordEmoji.FromName(discord, ":musical_note:")))
+                );
             
-            if (info == null)
-                return false;
-
-            string ownerImage = info.Owner.Images == null ? info.Images.First().Url : info.Owner.Images.First().Url;
-            DiscordEmbedBuilder mainEmbed = new DiscordEmbedBuilder
-                {
-                    ImageUrl = info.Images.First().Url,
-                    Color = DiscordColor.Purple,
-                    Description = BuildDescription(info, link)
-                }
-                .WithFooter($"Shared by {e.Author.Username}", e.Author.AvatarUrl)
-                .WithAuthor($"Spotify playlist - {info.Name}", info.Href, ownerImage);
-
-            await discord.SendMessageAsync(e.Message.Channel, mainEmbed.Build());
+            await e.Message.Channel.SendMessageAsync(msg);
             return true;
         }
 
