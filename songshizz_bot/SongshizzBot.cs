@@ -33,7 +33,10 @@ namespace SongshizzBot
             if (Utilities.IsSpotifyPlaylist(link))
             {
                 string playlistId = link.Split("/playlist/")[1].Split('?')[0];
-                SpotifyClient spotify = new SpotifyClient(Environment.GetEnvironmentVariable("SPOTIFY_TOKEN") ?? string.Empty);
+                var config = SpotifyClientConfig.CreateDefault();
+                var request = new ClientCredentialsRequest(Environment.GetEnvironmentVariable("SPOTIFY_CLIENT_TOKEN") ?? string.Empty, Environment.GetEnvironmentVariable("SPOTIFY_CLIENT_SECRET") ?? string.Empty);
+                var response = await new OAuthClient(config).RequestToken(request);
+                var spotify = new SpotifyClient(config.WithToken(response.AccessToken));
 
                 try
                 {

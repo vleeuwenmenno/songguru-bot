@@ -12,5 +12,5 @@ A songwhip discord bot that converts your song links to a nice looking embed.
 Important env variables:
 
     BOT_TOKEN - The Discord bot token
-    SPOTIFY_TOKEN - Spotify client secret for resolving album details
-    GUILD_ID (Optional) - If you prefer to serve only a single guild fill this
+    SPOTIFY_CLIENT_TOKEN - Spotify client id for resolving album details
+    SPOTIFY_CLIENT_SECRET - Spotify client secret for resolving album details
