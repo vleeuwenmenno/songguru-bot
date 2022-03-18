@@ -1,7 +1,7 @@
 services:
-  bot:
+  songshizz-bot:
     container_name: songshizz-bot
-    image: "songshizz-bot"
+    image: "stardebris/songshizz-bot"
     environment:
       - BOT_TOKEN=<enter your bot token here!>
       - SPOTIFY_CLIENT_TOKEN=<enter your spotify client id here!>
