@@ -33,7 +33,7 @@ namespace SongshizzBot
             if (Utilities.IsSpotifyPlaylist(link))
             {
                 string playlistId = link.Split("/playlist/")[1].Split('?')[0];
-                SpotifyClient spotify = new SpotifyClient(Program.Options.SpotifyToken);
+                SpotifyClient spotify = new SpotifyClient(Environment.GetEnvironmentVariable("SPOTIFY_TOKEN") ?? string.Empty);
 
                 try
                 {

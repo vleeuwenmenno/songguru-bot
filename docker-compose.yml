@@ -1,0 +1,7 @@
+services:
+  bot:
+    container_name: songshizz-bot
+    image: "songshizz-bot"
+    environment:
+      - BOT_TOKEN=ODYxMDE4MTc1OTM1ODczMDU0.YODrqg.hHsaLKPjFXdnHAL-Q8Vcn65K9_U
+      - SPOTIFY_TOKEN=BQCDvx8VN5pQNNmGos3fwb03LEySoCdaH1fD4xXufkAXHy0M9fGVEGk8bEQO5_rRFn2zODKfJFveGHURowG1qk9WXPHwRqhvez6x1PVeySPnDuokDRshasp96DXeaLLWklwmRx2F1AKUrUbqy7E9610j84BL7rk

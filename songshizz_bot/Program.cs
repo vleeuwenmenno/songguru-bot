@@ -18,7 +18,6 @@ namespace songshizz_bot
     // LIVE BOT: https://discord.com/api/oauth2/authorize?client_id=860899901020700684&permissions=2147870784&scope=bot%20applications.commands
     public class Program
     {
-        public static Options Options;
         private static DiscordClient _discord;
         private SlashCommandsExtension _slash;
         
@@ -45,7 +44,7 @@ namespace songshizz_bot
         {
             _discord = new DiscordClient(new DiscordConfiguration()
             {
-                Token = Options.BotToken,
+                Token = Environment.GetEnvironmentVariable("BOT_TOKEN"),
                 TokenType = TokenType.Bot,
                 Intents = DiscordIntents.AllUnprivileged
             });
@@ -56,7 +55,6 @@ namespace songshizz_bot
             _slash = _discord.UseSlashCommands(new SlashCommandsConfiguration
             {
                 Services = new ServiceCollection()
-                    .AddSingleton(Options)
                     .BuildServiceProvider()
             });
             
@@ -67,8 +65,6 @@ namespace songshizz_bot
 
         private async Task SetupBlacklist()
         {
-            Options = Options.LoadConfig();
-
             if (File.Exists($"{Environment.CurrentDirectory}/users-blacklist.json"))
                 Blacklist.userMentionMode = JsonConvert.DeserializeObject<List<ulong>>(await File.ReadAllTextAsync($"{Environment.CurrentDirectory}/users-blacklist.json"));
          
