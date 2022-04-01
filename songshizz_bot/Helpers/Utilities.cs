@@ -53,7 +53,8 @@ namespace SongshizzBot
                 return false;
 
             return (msg.StartsWith("https://youtube.com/") ||
-                    msg.StartsWith("https://www.youtube.com/"));
+                    msg.StartsWith("https://www.youtube.com/") ||
+                    msg.StartsWith("https://youtu.be/"));
         }
 
         public static bool IsLinkMessage(string msg)
@@ -68,6 +69,7 @@ namespace SongshizzBot
                     msg.StartsWith("https://www.deezer.com/") ||
                     msg.StartsWith("https://youtube.com/") ||
                     msg.StartsWith("https://www.youtube.com/") ||
+                    msg.StartsWith("https://youtu.be/") ||
                     msg.StartsWith("https://music.youtube.com/") ||
                     msg.StartsWith("https://music.apple.com/") ||
                     msg.StartsWith("https://tidal.com/") ||
