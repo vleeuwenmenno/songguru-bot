@@ -1,22 +1,13 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
-using Newtonsoft.Json;
-using RestSharp;
 using SongshizzBot.Helpers;
-using Songwhip;
-using Songwhip.Models;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace SongshizzBot
 {
-    public class SongshizzCommands : SlashCommandModule
+    public class SongshizzCommands : ApplicationCommandModule
     {
         [SlashCommand("info", "About this bot ...")]
         public async Task Info(InteractionContext ctx)
