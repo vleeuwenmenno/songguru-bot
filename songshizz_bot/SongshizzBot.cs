@@ -5,7 +5,6 @@ using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using Html2Markdown;
-using songshizz_bot;
 using Songwhip;
 using Songwhip.Models;
 using SpotifyAPI.Web;
@@ -28,7 +27,8 @@ namespace SongshizzBot
 
             if (!Utilities.IsYouTubeLink(link))
                 await e.Message.DeleteAsync();
-
+            
+            var mentions = Utilities.ExtractMentions(e.Message.Content, discord.CurrentUser.Id);
             if (Utilities.IsSpotifyPlaylist(link))
             {
                 var playlistId = link.Split("/playlist/")[1].Split('?')[0];
@@ -40,7 +40,7 @@ namespace SongshizzBot
                 try
                 {
                     var playlist = await spotify.Playlists.Get(playlistId);
-                    if (!await PostEmbed(playlist, e, discord))
+                    if (!await PostEmbed(playlist, mentions, e, discord))
                         await PostFailEmbed(e, discord);
                 }
                 catch (APIException)
@@ -54,7 +54,7 @@ namespace SongshizzBot
                 try
                 {
                     var info = await DeezerPlaylist.ScrapeInfo(playlistId);
-                    if (!await PostEmbed(info, e, discord))
+                    if (!await PostEmbed(info, mentions, e, discord))
                         await PostFailEmbed(e, discord);
                 }
                 catch (APIException)
@@ -65,7 +65,7 @@ namespace SongshizzBot
             else
             {
                 var (info, discordMessage) = await FetchSongwhipInfo(e, discord);
-                if (!await PostEmbed(info, e, discord))
+                if (!await PostEmbed(info, mentions, e, discord))
                     await PostFailEmbed(e, discord);
                 
                 if (!Utilities.IsYouTubeLink(link))
@@ -97,7 +97,7 @@ namespace SongshizzBot
             await e.Message.Channel.SendMessageAsync(msg);
         }
 
-        private static async Task<bool> PostEmbed(DeezerPlaylist info, MessageCreateEventArgs e, DiscordClient discord)
+        private static async Task<bool> PostEmbed(DeezerPlaylist info, string[] mentions, MessageCreateEventArgs e, DiscordClient discord)
         {
             var link = Utilities.ExtractLink(e.Message.Content);
             if (info == null)
@@ -122,7 +122,7 @@ namespace SongshizzBot
             return true;
         }
         
-        private static async Task<bool> PostEmbed(FullPlaylist info, MessageCreateEventArgs e, DiscordClient discord)
+        private static async Task<bool> PostEmbed(FullPlaylist info, string[] mentions, MessageCreateEventArgs e, DiscordClient discord)
         {
             var link = Utilities.ExtractLink(e.Message.Content);
             if (info == null)
@@ -148,7 +148,7 @@ namespace SongshizzBot
             return true;
         }
         
-        private static async Task<bool> PostEmbed(SongwhipInfo info, MessageCreateEventArgs e, DiscordClient discord)
+        private static async Task<bool> PostEmbed(SongwhipInfo info, string[] mentions, MessageCreateEventArgs e, DiscordClient discord)
         {
             var link = Utilities.ExtractLink(e.Message.Content);
             if (info == null)
@@ -157,12 +157,11 @@ namespace SongshizzBot
             if (Utilities.IsYouTubeLink(link)) // If it is a YouTube link and we got this far it probably means we managed to find a album/artist/song link for it.
                 await e.Message.DeleteAsync();
 
-
             var mainEmbed = new DiscordEmbedBuilder
                 {
                     ImageUrl = info.Image,
                     Color = DiscordColor.Purple,
-                    Description = BuildDescription(info, link)
+                    Description = BuildDescription(info, e, mentions)
                 }
                 .WithFooter($"Shared by {e.Author.Username}", e.Author.AvatarUrl)
                 .WithAuthor($"{string.Join(" ", info.Artists.Select(x => x.Name))} - {info.Name}", info.Url,
@@ -198,13 +197,28 @@ namespace SongshizzBot
             return new Tuple<SongwhipInfo, DiscordMessage>(await SongwhipApi.GetInfo(link), msg);
         }
         
-        private static string BuildDescription(SongwhipInfo info, string originalMessage)
+        private static string BuildDescription(SongwhipInfo info, MessageCreateEventArgs e,
+            string[] mentions)
         {
-            string link = Utilities.ExtractLink(originalMessage);
-            string desc = "";
-            desc =
-                $"**Release date:** {info.ReleaseDate:dd-MM-yyyy}\n**Track name:** {info.Name}\n**Artist:** {string.Join(" ", info.Artists.Select(x => x.Name))}\nListen on ";
+            var desc = $"**Track:** {info.Name}\n**Artist:** {string.Join(" ", info.Artists.Select(x => x.Name))}";
+            
+            // Add the streaming services
+            desc += "\n**Stream it from** " + BuildStreamingServices(info);
+            
+            // If there are no mentions, return the description
+            if (mentions.Length <= 0) return desc;
+            
+            // Add the mentions to the description and surround them with <@userId>
+            desc += $"\n\n<@{e.Author.Id}> mentions this to ";
+            desc = mentions.Aggregate(desc, (current, mention) => current + $"<@{mention}> ");
 
+            return desc;
+        }
+
+        private static string BuildStreamingServices(SongwhipInfo info)
+        {
+            string desc = "";
+            
             if (info.Links.Spotify)
                 desc += "<:spotify:860992370954469407> ";
 
@@ -225,10 +239,10 @@ namespace SongshizzBot
 
             if (info.Links.Tidal)
                 desc += "<:tidal:860992188434612245> ";
-
+            
             return desc;
         }
-        
+
         private static string BuildDescription(FullPlaylist info, string originalMessage)
         {
             string link = Utilities.ExtractLink(originalMessage);

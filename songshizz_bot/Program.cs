@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using DSharpPlus;
+using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using DSharpPlus.SlashCommands;
 using Microsoft.Extensions.DependencyInjection;
@@ -80,6 +83,24 @@ namespace songshizz_bot
             _slash.RegisterCommands<SongshizzCommands>();
             
             await _discord.ConnectAsync();
+            
+            // Let's log what guilds the bot is in
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Add("Authorization", "Bot " + token);
+            
+            // TODO: This is a hacky way to get the bot's guilds, but it works for now
+            // Seems like the DSharpPlus library doesn't properly fetch the guilds so we have to do it manually
+            var guildsResponse = await client.GetAsync(@"https://discord.com/api/v6/users/@me/guilds");
+            var response = await guildsResponse.Content.ReadAsStringAsync();
+            var guilds = JsonConvert.DeserializeObject<List<DiscordGuild>>(response);
+            
+            Console.WriteLine($"Bot is in {guilds.Count} guilds:");
+            foreach (var guild in guilds)
+            {
+                Console.WriteLine($"- {guild.Name} ({guild.Id})");
+            }
+            
+            await _discord.UpdateStatusAsync(new DiscordActivity($" for music links in {guilds.Count} guilds!", ActivityType.Watching));
         }
 
         private async Task SetupBlacklist()

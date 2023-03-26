@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -14,7 +15,7 @@ namespace SongshizzBot
         {
             get
             {
-                string v = "v1.4.3";
+                string v = "v1.5.0";
                 if (File.Exists($"{Environment.CurrentDirectory}/BRANCH") && File.Exists($"{Environment.CurrentDirectory}/COMMIT"))
                 {
                     string hash = File.ReadAllText($"{Environment.CurrentDirectory}/COMMIT").Replace("\n", "");
@@ -101,6 +102,21 @@ namespace SongshizzBot
             return msg.StartsWith("https://deezer.com/") ||
                    msg.StartsWith("https://www.deezer.com/") && 
                    msg.Contains("/playlist/");
+        }
+
+        public static string[] ExtractMentions(string messageContent, ulong currentUserId)
+        {
+            // Let's search in message content for mentions <@userid>
+            var matches = Regex.Matches(messageContent, @"<@(\d+)>");
+            var mentions = new List<string>();
+            foreach (Match match in matches)
+            {
+                // If the mention is not the current bot user id, add it to the list
+                if (match.Groups[1].Value != currentUserId.ToString())
+                    mentions.Add(match.Groups[1].Value);
+            }
+            
+            return mentions.ToArray();
         }
     }
 }
