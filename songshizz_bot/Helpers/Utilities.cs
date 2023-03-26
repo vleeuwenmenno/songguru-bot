@@ -15,7 +15,7 @@ namespace SongshizzBot
         {
             get
             {
-                string v = "v1.5.0";
+                string v = "v1.5.1";
                 if (File.Exists($"{Environment.CurrentDirectory}/BRANCH") && File.Exists($"{Environment.CurrentDirectory}/COMMIT"))
                 {
                     string hash = File.ReadAllText($"{Environment.CurrentDirectory}/COMMIT").Replace("\n", "");
@@ -36,7 +36,7 @@ namespace SongshizzBot
         /// <returns>Returns true unless mentioning mode is disabled or mentioning mode is enabled but the message contained a valid mention to the current bot user id.</returns>
         public static bool IsMentioningMode(MessageCreateEventArgs e, DiscordClient discord)
         {
-            if (Blacklist.userMentionMode.Any(x => x == e.Message.Author.Id))
+            if (ListHelper.MentioningMode.Any(x => x == e.Message.Author.Id))
             {
                 if (e.Message.Content.Contains(discord.CurrentUser.Id.ToString()))
                     return false;

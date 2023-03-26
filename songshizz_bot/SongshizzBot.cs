@@ -5,6 +5,7 @@ using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using Html2Markdown;
+using SongshizzBot.Helpers;
 using Songwhip;
 using Songwhip.Models;
 using SpotifyAPI.Web;
@@ -26,7 +27,11 @@ namespace SongshizzBot
                 return;
 
             if (!Utilities.IsYouTubeLink(link))
-                await e.Message.DeleteAsync();
+            {
+                // Make sure the requester wishes to keep the message, if so leave it alone otherwise let's delete it if user ulong is in the ListHelper.KeepMessageMode list.
+                if (!ListHelper.KeepMessageMode.Contains(e.Author.Id))
+                    await e.Message.DeleteAsync();
+            }
             
             var mentions = Utilities.ExtractMentions(e.Message.Content, discord.CurrentUser.Id);
             if (Utilities.IsSpotifyPlaylist(link))
@@ -155,7 +160,11 @@ namespace SongshizzBot
                 return false;
 
             if (Utilities.IsYouTubeLink(link)) // If it is a YouTube link and we got this far it probably means we managed to find a album/artist/song link for it.
-                await e.Message.DeleteAsync();
+            {
+                // Make sure the requester wishes to keep the message, if so leave it alone otherwise let's delete it if user ulong is in the ListHelper.KeepMessageMode list.
+                if (!ListHelper.KeepMessageMode.Contains(e.Author.Id))
+                    await e.Message.DeleteAsync();
+            }
 
             var mainEmbed = new DiscordEmbedBuilder
                 {

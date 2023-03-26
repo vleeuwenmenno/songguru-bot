@@ -8,3 +8,5 @@ services:
       - BOT_TOKEN=<enter your bot token here!>
       - SPOTIFY_CLIENT_TOKEN=<enter your spotify client id here!>
       - SPOTIFY_CLIENT_SECRET=<enter your spotify client secret here!>
+    volumes:
+      - "./data:/songshizz_bot/data"

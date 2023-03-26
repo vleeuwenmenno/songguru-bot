@@ -102,21 +102,6 @@ namespace songshizz_bot
             
             await _discord.UpdateStatusAsync(new DiscordActivity($" for music links in {guilds.Count} guilds!", ActivityType.Watching));
         }
-
-        private async Task SetupBlacklist()
-        {
-            if (File.Exists($"{Environment.CurrentDirectory}/users-blacklist.json"))
-                Blacklist.userMentionMode = JsonConvert.DeserializeObject<List<ulong>>(await File.ReadAllTextAsync($"{Environment.CurrentDirectory}/users-blacklist.json"));
-         
-            if (File.Exists($"{Environment.CurrentDirectory}/guild-blacklist.json"))
-                Blacklist.guildBlacklist = JsonConvert.DeserializeObject<List<ulong>>(await File.ReadAllTextAsync($"{Environment.CurrentDirectory}/guild-blacklist.json"));
-            
-            if (Blacklist.userMentionMode == null)
-                Blacklist.userMentionMode = new List<ulong>();
-
-            if (Blacklist.guildBlacklist == null)
-                Blacklist.guildBlacklist = new List<ulong>();
-        }
         #endregion
         
         private static void Main(string[] args) =>
@@ -128,7 +113,7 @@ namespace songshizz_bot
             AppDomain.CurrentDomain.ProcessExit += OnProcessExit;
             
             await LoadEnvironmentVariables(Environment.CurrentDirectory + "/.env");
-            await SetupBlacklist();
+            await ListHelper.Load();
             await SetupDiscordBot();
             
             Console.WriteLine("Songshizz bot is ready!");
