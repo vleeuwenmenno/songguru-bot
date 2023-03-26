@@ -40,11 +40,30 @@ namespace songshizz_bot
         #endregion
 
         #region Setups
+        private async Task LoadEnvironmentVariables(string filePath)
+        {
+            if (!File.Exists(filePath))
+                return;
+
+            foreach (var line in await File.ReadAllLinesAsync(filePath))
+            {
+                var parts = line.Split(
+                    '=',
+                    StringSplitOptions.RemoveEmptyEntries);
+
+                if (parts.Length != 2)
+                    continue;
+
+                Environment.SetEnvironmentVariable(parts[0], parts[1]);
+            }
+        }
+
         private async Task SetupDiscordBot()
         {
+            var token = Environment.GetEnvironmentVariable("BOT_TOKEN");
             _discord = new DiscordClient(new DiscordConfiguration()
             {
-                Token = Environment.GetEnvironmentVariable("BOT_TOKEN"),
+                Token = token,
                 TokenType = TokenType.Bot,
                 Intents = DiscordIntents.AllUnprivileged
             });
@@ -86,7 +105,8 @@ namespace songshizz_bot
         {
             Console.WriteLine($"Songshizz bot {Utilities.Version} starting ...");
             AppDomain.CurrentDomain.ProcessExit += OnProcessExit;
-
+            
+            await LoadEnvironmentVariables(Environment.CurrentDirectory + "/.env");
             await SetupBlacklist();
             await SetupDiscordBot();
             
