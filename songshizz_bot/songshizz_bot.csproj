@@ -2,16 +2,16 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="DSharpPlus" Version="4.2.0" />
-      <PackageReference Include="DSharpPlus.SlashCommands" Version="4.2.0" />
-      <PackageReference Include="Html2Markdown" Version="5.0.2.561" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
-      <PackageReference Include="RestSharp" Version="108.0.2" />
-      <PackageReference Include="SpotifyAPI.Web" Version="6.3.0" />
+      <PackageReference Include="DSharpPlus" Version="4.3.0" />
+      <PackageReference Include="DSharpPlus.SlashCommands" Version="4.3.0" />
+      <PackageReference Include="Html2Markdown" Version="5.1.0.703" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+      <PackageReference Include="RestSharp" Version="109.0.1" />
+      <PackageReference Include="SpotifyAPI.Web" Version="7.0.0" />
     </ItemGroup>
 
 </Project>

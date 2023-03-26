@@ -27,23 +27,8 @@ public class SongwhipInfo
     [JsonPropertyName("sourceCountry")]
     public string SourceCountry { get; set; }
 
-    [JsonPropertyName("releaseDate")]
-    public DateTime ReleaseDate { get; set; }
-
-    [JsonPropertyName("createdAt")]
-    public DateTime CreatedAt { get; set; }
-
-    [JsonPropertyName("updatedAt")]
-    public DateTime UpdatedAt { get; set; }
-
-    [JsonPropertyName("refreshedAt")]
-    public DateTime RefreshedAt { get; set; }
-
     [JsonPropertyName("image")]
     public string Image { get; set; }
-
-    [JsonPropertyName("config")]
-    public object Config { get; set; }
 
     [JsonPropertyName("links")]
     public HasLinks Links { get; set; }
