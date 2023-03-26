@@ -37,7 +37,7 @@ namespace SongshizzBot
         {
             if (Blacklist.userMentionMode.Any(x => x == e.Message.Author.Id))
             {
-                if (e.Message.Content.Contains($"<@!{discord.CurrentUser.Id}>"))
+                if (e.Message.Content.Contains(discord.CurrentUser.Id.ToString()))
                     return false;
                 
                 Console.WriteLine($"music link detected for {e.Message.Author.Username}#{e.Message.Author.Id} on {e.Guild.Name} ({e.Guild.Id}) but doing nothing because user has mentioning mode enabled but didn't mention the bot~");
