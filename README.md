@@ -22,7 +22,7 @@ Alternatively you can build a container yourself as follows:
 2. Checkout to your desired branch `git checkout production`
 3. Build a docker image `make`
 4. Update your env variables and your `docker-compose.yml` to run your local image.
-5. Run the docker image `docker-compose up -d`
+5. Run the docker image `docker compose up -d`
 6. Enjoy~ `docker stats <container>`
 
 ### Required variables:
