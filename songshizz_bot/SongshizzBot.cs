@@ -16,16 +16,18 @@ namespace SongshizzBot
     {
         public static async Task ProcessMessage(MessageCreateEventArgs e, DiscordClient discord)
         {
-            if (e.Author.Id == discord.CurrentUser.Id)
+            var msgContent = e.Message.Content;
+            if (e.Author.Id == discord.CurrentUser.Id || msgContent == "")
                 return;
-            
-            var link = Utilities.ExtractLink(e.Message.Content);
+
+            var link = Utilities.ExtractLink(msgContent);
             if (!Utilities.IsLinkMessage(link))
                 return;
 
             if (Utilities.IsMentioningMode(e, discord))
                 return;
 
+            // Let's see if we can delete the message but only if we are allowed to and if it's not YouTube.
             if (!Utilities.IsYouTubeLink(link))
             {
                 // Make sure the requester wishes to keep the message, if so leave it alone otherwise let's delete it if user ulong is in the ListHelper.KeepMessageMode list.
@@ -33,7 +35,7 @@ namespace SongshizzBot
                     await e.Message.DeleteAsync();
             }
             
-            var mentions = Utilities.ExtractMentions(e.Message.Content, discord.CurrentUser.Id);
+            var mentions = Utilities.ExtractMentions(msgContent, discord.CurrentUser.Id);
             if (Utilities.IsSpotifyPlaylist(link))
             {
                 var playlistId = link.Split("/playlist/")[1].Split('?')[0];

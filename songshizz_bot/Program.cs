@@ -68,7 +68,7 @@ namespace songshizz_bot
             {
                 Token = token,
                 TokenType = TokenType.Bot,
-                Intents = DiscordIntents.AllUnprivileged
+                Intents = DiscordIntents.AllUnprivileged | DiscordIntents.MessageContents,
             });
             
             _discord.MessageCreated += MessageCreated;
