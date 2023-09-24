@@ -15,7 +15,7 @@ namespace SongshizzBot
         {
             get
             {
-                string v = "v1.5.3";
+                string v = "v1.5.4";
                 if (File.Exists($"{Environment.CurrentDirectory}/BRANCH") && File.Exists($"{Environment.CurrentDirectory}/COMMIT"))
                 {
                     string hash = File.ReadAllText($"{Environment.CurrentDirectory}/COMMIT").Replace("\n", "");
