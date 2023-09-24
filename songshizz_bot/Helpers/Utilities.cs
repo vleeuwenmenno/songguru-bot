@@ -93,6 +93,7 @@ namespace SongshizzBot
         {
             return msg.StartsWith("https://www.spotify.com/") ||
                    msg.StartsWith("https://spotify.com/") ||
+                   msg.StartsWith("https://spotify.link/") ||
                    msg.StartsWith("https://open.spotify.com/") && 
                    msg.Contains("/playlist/");
         }
