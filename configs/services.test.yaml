@@ -1,0 +1,15 @@
+streaming_services:
+  serviceA:
+    name: ServiceA
+    icon: <:serviceA:12345678901234567>
+    color: "#ff0000"
+    urls: 
+      - https://exampleA.link
+      - https://exampleA.com
+  serviceB:
+    name: ServiceB
+    icon: <:serviceB:12345678901234567>
+    color: "#00ff00"
+    urls: 
+      - https://exampleB.link
+      - https://exampleB.com
