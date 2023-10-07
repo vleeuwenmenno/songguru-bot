@@ -12,24 +12,19 @@ A songwhip discord bot that converts your song links to a nice looking embed.
 Deployment is done using docker and can be done using the provided `docker-compose.yml` file.
 
 1. Create a new folder and create the `docker-compose.yml` file.
-2. Update the `docker-compose.yml` with the correct env variables as show below.
-3. Run the container using `docker-compose up -d`
-4. Enjoy~ `docker stats <container>`
+2. Update the `docker-compose.yml` with the correct mount point for the configs folder.
+3. Create the `configs/config.yaml` with the correct settings.
+4. Run the container using `docker-compose up -d`
+5. Enjoy~ `docker stats <container>`
 
 Alternatively you can build a container yourself as follows:
 
 1. Clone the repository `git clone git@github.com:vleeuwenmenno/songwhip-bot.git`
 2. Checkout to your desired branch `git checkout production`
 3. Build a docker image `make`
-4. Update your env variables and your `docker-compose.yml` to run your local image.
+4. Update your config files and your `docker-compose.yml` to run your local image.
 5. Run the docker image `docker compose up -d`
 6. Enjoy~ `docker stats <container>`
-
-### Required variables:
-
-    BOT_TOKEN - The Discord bot token
-    SPOTIFY_CLIENT_TOKEN - Spotify client id for resolving album details
-    SPOTIFY_CLIENT_SECRET - Spotify client secret for resolving album details
 
 ## Contribute
 
@@ -40,7 +35,7 @@ I am happy to accept contributions, fork the project make your changes and creat
 This project is licensed under the MIT License.
 
 ```
-Copyright 2021 Menno van Leeuwen
+Copyright 2023 Menno van Leeuwen
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

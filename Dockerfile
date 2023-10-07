@@ -1,15 +1,16 @@
-FROM mcr.microsoft.com/dotnet/sdk:6.0-jammy AS build-env
-WORKDIR /songshizz_bot
+FROM golang:1.20.8-alpine
+RUN apk add --no-cache gcc g++ git openssh-client
 
-# Copy everything
+WORKDIR /app
+
+COPY go.mod go.sum ./
+RUN go mod download
+
 COPY . ./
-# Restore as distinct layers
-RUN dotnet restore
-# Build and publish a release
-RUN dotnet publish -c Release -o out
+RUN GO111MODULE=on CGO_ENABLED=1 GOOS=linux go build -ldflags="-w -s" -o /app/songshizz_bot
 
-# Build runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:6.0-jammy
-WORKDIR /songshizz_bot
-COPY --from=build-env /songshizz_bot/out .
-ENTRYPOINT ["dotnet", "songshizz_bot.dll"]
+HEALTHCHECK --interval=10s --timeout=5s --start-period=30s \ 
+  CMD wget --no-verbose --tries=1 http://localhost:8080/changelogs -O /dev/null || exit 1  
+
+EXPOSE 8080
+CMD ["/app/songshizz_bot"]

@@ -1,9 +1,4 @@
-.idea/
-bin/
-obj/
-/packages/
-riderModule.iml
-/_ReSharper.Caches/
-build/
-songshizz_bot/data/
-out/
+configs/config.yaml
+configs/services.yaml
+**/build
+**/database.db

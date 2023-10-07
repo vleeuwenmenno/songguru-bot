@@ -1,0 +1,25 @@
+discord:
+  bot_token: TOKEN_HERE
+  admin_role_name: SongwhipAdmin
+
+intents: 
+  - Guilds         # Needed for keeping track of guilds
+  - GuildMessages  # Needed to look for music links
+  - GuildMembers   # Needed to find guild owner for web portal access
+
+database_path: ./configs/database.db
+default_guild_settings:
+  keep_original_messages:
+    enabled: true
+    allow_members_override: true
+  mention_mode:
+    enabled: false
+    allow_members_override: true
+  simple_mode: 
+    enabled: true
+    allow_members_override: false
+
+web_portal:
+  port: 8080
+  url: http://localhost:8080
+  debug_mode: false
