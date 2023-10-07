@@ -11,8 +11,6 @@ import (
 func GuildsCleanup(app *models.App, guilds []*discordgo.Guild) {
 	db := app.DB
 
-	logging.PrintLog("Purging guilds from database that bot no longer has access to ...")
-
 	// Clean up guilds that are no longer in s.State.Guilds (e.g. bot got kicked while offline)
 	for _, guild := range guilds {
 		existingGuild := &dbModels.Guild{}
@@ -22,6 +20,6 @@ func GuildsCleanup(app *models.App, guilds []*discordgo.Guild) {
 		}
 
 		db.Delete(existingGuild)
-		logging.PrintLog("- purged %s", guild.ID)
+		logging.PrintLog("%s purged guild as we appear to no longer have access to it.", guild.ID)
 	}
 }
