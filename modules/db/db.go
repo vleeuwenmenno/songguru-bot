@@ -15,7 +15,8 @@ func SetupDB() (*gorm.DB, error) {
 	}
 
 	db.AutoMigrate(&models.Guild{})
-	db.AutoMigrate(&models.GuildSettings{})
+	db.AutoMigrate(&models.GuildSetting{})
+	db.AutoMigrate(&models.MemberSetting{})
 
 	return db, nil
 }

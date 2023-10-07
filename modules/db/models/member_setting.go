@@ -5,13 +5,13 @@ import (
 )
 
 /*
-GuildSettings
+GuildSetting
 
 [SimpleMode] - If enabled we only return the link from Songwhip.
 [MentionOnlyMode] - If enabled we only respond if the bot was mentioned.
 [KeepOriginalMessage] - If enabled we keep the original message otherwise we delete it.
 */
-type GuildSettings struct {
+type MemberSetting struct {
 	gorm.Model
 	ID                  string `gorm:"primaryKey"`
 	SimpleMode          bool

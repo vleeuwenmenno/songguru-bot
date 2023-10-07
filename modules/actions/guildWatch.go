@@ -10,6 +10,7 @@ import (
 
 func EnsureGuildIsWatched(g *discordgo.Guild, app *models.App) {
 	db := app.DB
+	config := app.Config
 	existingGuild := dbModels.Guild{}
 	db.Find(&existingGuild, "ID = ?", g.ID).Limit(1)
 
@@ -24,9 +25,15 @@ func EnsureGuildIsWatched(g *discordgo.Guild, app *models.App) {
 			logging.PrintLog("Error storing guild: %s", pk.Error)
 		}
 
-		guildSettingsPk := db.Create(&dbModels.GuildSettings{
-			ID:         g.ID,
-			GuildRefer: g.ID,
+		guildSettingsPk := db.Create(&dbModels.GuildSetting{
+			ID:                               g.ID,
+			GuildRefer:                       g.ID,
+			MentionOnlyMode:                  config.DefaultGuildSettings.MentionMode.Enabled,
+			AllowOverrideMentionOnlyMode:     config.DefaultGuildSettings.MentionMode.AllowOverride,
+			SimpleMode:                       config.DefaultGuildSettings.SimpleMode.Enabled,
+			AllowOverrideSimpleMode:          config.DefaultGuildSettings.SimpleMode.AllowOverride,
+			KeepOriginalMessage:              config.DefaultGuildSettings.KeepOriginalMessage.Enabled,
+			AllowOverrideKeepOriginalMessage: config.DefaultGuildSettings.KeepOriginalMessage.AllowOverride,
 		})
 
 		if guildSettingsPk.Error != nil {

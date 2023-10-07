@@ -4,22 +4,24 @@ import (
 	"errors"
 	"regexp"
 	"songwhip_bot/models"
+	dbModels "songwhip_bot/modules/db/models"
 	"songwhip_bot/modules/logging"
 	songwhipapi "songwhip_bot/modules/songwhip_api"
 	"strings"
 
 	"github.com/bwmarrin/discordgo"
+	"gorm.io/gorm"
 )
 
-func ProcessMessage(app *models.App, s *discordgo.Session, m *discordgo.MessageCreate) {
-	link, err := ExtractLink(m.Content)
+func ProcessMessage(app *models.App, session *discordgo.Session, event *discordgo.MessageCreate) {
+	link, err := extractLink(event.Content)
 	if err != nil {
 		logging.PrintLog(err.Error(), err)
 		return
 	}
 
 	for _, service := range app.Services.StreamingServices {
-		if IsValidLink(*link, service) {
+		if isValidLink(*link, service) {
 			info, err := songwhipapi.GetInfo(*link)
 
 			if err != nil {
@@ -27,13 +29,37 @@ func ProcessMessage(app *models.App, s *discordgo.Session, m *discordgo.MessageC
 				return
 			}
 
-			s.ChannelMessageSend(m.ChannelID, info.URL)
+			deleteMessageMaybe(app.DB, session, event.Message)
+
+			session.ChannelMessageSend(event.ChannelID, info.URL)
 		}
 	}
 }
 
+func deleteMessageMaybe(db *gorm.DB, session *discordgo.Session, message *discordgo.Message) {
+	// Check if we should delete the original message based on the guild
+	guildSettings := dbModels.GuildSetting{}
+	db.Where("ID = ?", message.GuildID).First(&guildSettings)
+	keepOriginalMessage := guildSettings.KeepOriginalMessage
+
+	// Check if members on this guild are allowed to override this
+	if guildSettings.AllowOverrideKeepOriginalMessage {
+		memberSettings := dbModels.MemberSetting{}
+		err := db.Where("ID = ?", message.Author.ID).First(&memberSettings)
+
+		if err.Error == nil {
+			// Check if the member requesting this has chosen to delete the message or not
+			keepOriginalMessage = memberSettings.KeepOriginalMessage
+		}
+	}
+
+	if !keepOriginalMessage {
+		session.ChannelMessageDelete(message.ChannelID, message.ID)
+	}
+}
+
 // Checks if a given link is one that we have a service for configured
-func IsValidLink(link string, service models.Service) bool {
+func isValidLink(link string, service models.Service) bool {
 	for _, url := range service.Urls {
 		if strings.HasPrefix(link, url) {
 			return true
@@ -42,7 +68,7 @@ func IsValidLink(link string, service models.Service) bool {
 	return false
 }
 
-func ExtractLink(messageContent string) (*string, error) {
+func extractLink(messageContent string) (*string, error) {
 	regex := regexp.MustCompile(`(http|ftp|https):\/\/([\w\-_]+(?:(?:\.[\w\-_]+)+))([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?`)
 	url := regex.FindString(messageContent)
 

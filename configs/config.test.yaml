@@ -5,3 +5,13 @@ intents:
   - Guilds         # Needed for keeping track of guilds
   - GuildMessages  # Needed to look for music links
   - GuildMembers   # Needed to find guild owner for web portal access
+default_guild_settings:
+  keep_original_messages:
+    enabled: true
+    allow_members_override: true
+  mention_mode:
+    enabled: false
+    allow_members_override: true
+  simple_mode: 
+    enabled: true
+    allow_members_override: false
