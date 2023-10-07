@@ -1,2 +1,3 @@
 configs/config.yaml
 configs/services.yaml
+**/build
