@@ -23,6 +23,17 @@ func TestGetConfig(t *testing.T) {
 	if config.Discord.BotToken != expectedBotToken {
 		t.Errorf("unexpected bot token: got %s, want %s", config.Discord.BotToken, expectedBotToken)
 	}
+
+	// Assert that we have the correct number of intents
+	if len(config.Intents) != 2 {
+		t.Errorf("unexpected intents: got %d, want 2", len(config.Intents))
+	}
+
+	// Assert that we have the correct intents
+	expectedIntents := []string{"Guilds", "GuildMessages"}
+	if !th.Equal(config.Intents, expectedIntents) {
+		t.Errorf("expected intents to be %v, but got %v", expectedIntents, config.Intents)
+	}
 }
 
 func TestGetConfigFailure(t *testing.T) {

@@ -1,46 +1,63 @@
 package bot
 
 import (
-	"fmt"
 	"os"
 	"os/signal"
 	"songwhip_bot/models"
-	"songwhip_bot/modules/handlers"
+	"songwhip_bot/modules/bot/handlers"
+	config "songwhip_bot/modules/config/discord"
+	"songwhip_bot/modules/logging"
 	"syscall"
 
 	"github.com/bwmarrin/discordgo"
 )
 
-func setIntents(dg *discordgo.Session) {
-	dg.Identify.Intents = discordgo.IntentsDirectMessages
+type Bot struct {
+	App     *models.App
+	Session *discordgo.Session
 }
 
-func SetupBot(config *models.Config, services *models.Services) {
-	dg, err := discordgo.New("Bot " + config.Discord.BotToken)
+func (b *Bot) GetApp() *models.App {
+	return b.App
+}
 
+func NewBot(app *models.App) (*Bot, error) {
+	session, err := discordgo.New("Bot " + app.Config.Discord.BotToken)
 	if err != nil {
-		fmt.Println("error creating Discord session,", err)
-		panic(err)
+		return nil, err
 	}
 
-	// Add handlers to the session
-	handlers.AddHandlers(dg)
+	return &Bot{
+		App:     app,
+		Session: session,
+	}, nil
+}
 
-	// Set the Intents of the session
-	setIntents(dg)
+func (b *Bot) AddHandlers() {
+	b.Session.AddHandler(handlers.NewGuildCreateHandler(b))
+	b.Session.AddHandler(handlers.NewGuildDeleteHandler(b))
+	b.Session.AddHandler(handlers.NewMessageCreateHandler(b))
+	b.Session.AddHandler(handlers.NewReadyHandler(b))
+}
+
+func (b *Bot) Start(app *models.App) {
+	b.AddHandlers()
+
+	// Set the Intents of the session.PrintLog
+	b.Session.Identify.Intents = config.GetIntents(app.Config)
 
 	// Open the websocket and begin listening
-	err = dg.Open()
+	err := b.Session.Open()
 	if err != nil {
-		fmt.Println("error opening connection,", err)
+		logging.PrintLog("error opening connection,", err)
 		panic(err)
 	}
 
-	fmt.Println("Bot is now running.  Press CTRL-C to exit.")
+	logging.PrintLog("Bot is now running.  Press CTRL-C to exit.")
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt)
 	<-sc
 
 	// Cleanly close down the Discord session.
-	dg.Close()
+	b.Session.Close()
 }

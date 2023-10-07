@@ -1,2 +1,5 @@
 discord:
   bot_token: MOCK_BOT_TOKEN
+intents:
+  - Guilds
+  - GuildMessages
