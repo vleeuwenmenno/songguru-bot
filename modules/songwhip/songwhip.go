@@ -14,7 +14,11 @@ import (
 )
 
 func ProcessMessage(app *models.App, session *discordgo.Session, event *discordgo.MessageCreate) {
-	mayContinue := evaluateMentionOnlyMode(app, session, event.Message)
+	mayContinue, mentionOnlyMode := evaluateMentionOnlyMode(app, session, event.Message)
+	shouldDeleteMessage := evaluateDeleteMessage(app.DB, session, event.Message)
+	simpleMode := evaluateSimpleMode(app, session, event.Message)
+
+	logging.PrintLog("message for guild %s delete? %v, simple mode? %v, mention only mode? %v, continue? %v", event.Message.GuildID, shouldDeleteMessage, simpleMode, mentionOnlyMode, mayContinue)
 
 	if !mayContinue {
 		return
@@ -39,14 +43,23 @@ func ProcessMessage(app *models.App, session *discordgo.Session, event *discordg
 				return
 			}
 
-			deleteMessageMaybe(app.DB, session, event.Message)
-			session.ChannelMessageSend(event.ChannelID, info.URL)
+			if shouldDeleteMessage {
+				session.ChannelMessageDelete(event.Message.ChannelID, event.Message.ID)
+			}
+
+			if simpleMode {
+				session.ChannelMessageSend(event.ChannelID, info.URL)
+				return
+			}
+
+			// TODO: Add support for embeds
+			session.ChannelMessageSend(event.ChannelID, "WIP ... not simple mode: "+info.URL)
 			return
 		}
 	}
 }
 
-func evaluateMentionOnlyMode(app *models.App, session *discordgo.Session, message *discordgo.Message) bool {
+func evaluateSimpleMode(app *models.App, session *discordgo.Session, message *discordgo.Message) bool {
 	db := app.DB
 
 	// Check if mention only mode is on in this guild
@@ -56,6 +69,32 @@ func evaluateMentionOnlyMode(app *models.App, session *discordgo.Session, messag
 	if err.Error != nil {
 		logging.PrintLog("Error getting guild settings for guild %s, error: %s", message.GuildID, err.Error.Error())
 		return false
+	}
+	simpleMode := guildSettings.SimpleMode
+
+	// Check if members on this guild are allowed to override this setting
+	if guildSettings.AllowOverrideSimpleMode {
+		memberSettings := dbModels.MemberSetting{}
+		affected := db.Find(&memberSettings, "ID = ?", message.Author.ID).Limit(1).RowsAffected
+
+		if affected > 0 {
+			// Check if the member requesting this has chosen to mention only mode or not
+			simpleMode = memberSettings.SimpleMode
+		}
+	}
+	return simpleMode
+}
+
+func evaluateMentionOnlyMode(app *models.App, session *discordgo.Session, message *discordgo.Message) (bool, bool) {
+	db := app.DB
+
+	// Check if mention only mode is on in this guild
+	guildSettings := dbModels.GuildSetting{}
+	err := db.Where("ID = ?", message.GuildID).First(&guildSettings)
+
+	if err.Error != nil {
+		logging.PrintLog("Error getting guild settings for guild %s, error: %s", message.GuildID, err.Error.Error())
+		return false, false
 	}
 	mentionOnlyMode := guildSettings.MentionOnlyMode
 
@@ -71,20 +110,20 @@ func evaluateMentionOnlyMode(app *models.App, session *discordgo.Session, messag
 	}
 
 	if mentionOnlyMode {
-		return strings.Contains(message.Content, session.State.User.Mention())
+		return strings.Contains(message.Content, session.State.User.Mention()), mentionOnlyMode
 	}
 
-	return true
+	return true, mentionOnlyMode
 }
 
-func deleteMessageMaybe(db *gorm.DB, session *discordgo.Session, message *discordgo.Message) {
+func evaluateDeleteMessage(db *gorm.DB, session *discordgo.Session, message *discordgo.Message) bool {
 	// Check if we should delete the original message based on the guild
 	guildSettings := dbModels.GuildSetting{}
 	err := db.Where("ID = ?", message.GuildID).First(&guildSettings)
 
 	if err.Error != nil {
 		logging.PrintLog("Error getting guild settings for guild %s, error: %s", message.GuildID, err.Error.Error())
-		return
+		return false
 	}
 	keepOriginalMessage := guildSettings.KeepOriginalMessage
 
@@ -99,9 +138,7 @@ func deleteMessageMaybe(db *gorm.DB, session *discordgo.Session, message *discor
 		}
 	}
 
-	if !keepOriginalMessage {
-		session.ChannelMessageDelete(message.ChannelID, message.ID)
-	}
+	return !keepOriginalMessage
 }
 
 // Checks if a given link is one that we have a service for configured
