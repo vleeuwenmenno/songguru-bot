@@ -14,6 +14,12 @@ import (
 )
 
 func ProcessMessage(app *models.App, session *discordgo.Session, event *discordgo.MessageCreate) {
+	mayContinue := evaluateMentionOnlyMode(app, session, event.Message)
+
+	if !mayContinue {
+		return
+	}
+
 	link, err := extractLink(event.Content)
 	if err != nil {
 		logging.PrintLog(err.Error(), err)
@@ -25,15 +31,50 @@ func ProcessMessage(app *models.App, session *discordgo.Session, event *discordg
 			info, err := songwhipapi.GetInfo(*link)
 
 			if err != nil {
+				if strings.Contains(err.Error(), "429 Too Many Requests") {
+					session.ChannelMessageSendReply(event.ChannelID, "Songwhip is currently rate limiting requests, please try again later", event.Message.Reference())
+				}
+
 				logging.PrintLog(err.Error(), err)
 				return
 			}
 
 			deleteMessageMaybe(app.DB, session, event.Message)
-
 			session.ChannelMessageSend(event.ChannelID, info.URL)
+			return
 		}
 	}
+}
+
+func evaluateMentionOnlyMode(app *models.App, session *discordgo.Session, message *discordgo.Message) bool {
+	db := app.DB
+
+	// Check if mention only mode is on in this guild
+	guildSettings := dbModels.GuildSetting{}
+	err := db.Where("ID = ?", message.GuildID).First(&guildSettings)
+
+	if err.Error != nil {
+		logging.PrintLog("Error getting guild settings for guild %s, error: %s", message.GuildID, err.Error.Error())
+		return false
+	}
+	mentionOnlyMode := guildSettings.MentionOnlyMode
+
+	// Check if members on this guild are allowed to override this setting
+	if guildSettings.AllowOverrideMentionOnlyMode {
+		memberSettings := dbModels.MemberSetting{}
+		affected := db.Find(&memberSettings, "ID = ?", message.Author.ID).Limit(1).RowsAffected
+
+		if affected > 0 {
+			// Check if the member requesting this has chosen to mention only mode or not
+			mentionOnlyMode = memberSettings.MentionOnlyMode
+		}
+	}
+
+	if mentionOnlyMode {
+		return strings.Contains(message.Content, session.State.User.Mention())
+	}
+
+	return true
 }
 
 func deleteMessageMaybe(db *gorm.DB, session *discordgo.Session, message *discordgo.Message) {
@@ -50,9 +91,9 @@ func deleteMessageMaybe(db *gorm.DB, session *discordgo.Session, message *discor
 	// Check if members on this guild are allowed to override this
 	if guildSettings.AllowOverrideKeepOriginalMessage {
 		memberSettings := dbModels.MemberSetting{}
-		err := db.Where("ID = ?", message.Author.ID).First(&memberSettings)
+		affected := db.Find(&memberSettings, "ID = ?", message.Author.ID).Limit(1).RowsAffected
 
-		if err.Error == nil {
+		if affected > 0 {
 			// Check if the member requesting this has chosen to delete the message or not
 			keepOriginalMessage = memberSettings.KeepOriginalMessage
 		}
