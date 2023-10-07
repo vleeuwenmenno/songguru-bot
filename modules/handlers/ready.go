@@ -11,6 +11,12 @@ func ready(s *discordgo.Session, r *discordgo.Ready) {
 	log.Printf("Bot is serving in %d servers!", len(s.State.Guilds))
 
 	for _, guild := range s.State.Guilds {
-		log.Printf(" - %s (id: %s)", guild.Name, guild.ID)
+		g, err := s.Guild(guild.ID)
+		if err != nil {
+			log.Printf("Failed to get guild information: %v", err)
+			continue
+		}
+
+		log.Printf(" - %s (id: %s)", g.Name, g.ID)
 	}
 }
