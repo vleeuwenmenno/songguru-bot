@@ -39,7 +39,12 @@ func ProcessMessage(app *models.App, session *discordgo.Session, event *discordg
 func deleteMessageMaybe(db *gorm.DB, session *discordgo.Session, message *discordgo.Message) {
 	// Check if we should delete the original message based on the guild
 	guildSettings := dbModels.GuildSetting{}
-	db.Where("ID = ?", message.GuildID).First(&guildSettings)
+	err := db.Where("ID = ?", message.GuildID).First(&guildSettings)
+
+	if err.Error != nil {
+		logging.PrintLog("Error getting guild settings for guild %s, error: %s", message.GuildID, err.Error.Error())
+		return
+	}
 	keepOriginalMessage := guildSettings.KeepOriginalMessage
 
 	// Check if members on this guild are allowed to override this
