@@ -1,14 +1,16 @@
-package main
+package config
 
 import (
 	"fmt"
 	"io"
 	"os"
 
+	"songwhip_bot/models"
+
 	"gopkg.in/yaml.v3"
 )
 
-func GetConfig(configFiles ...string) (*AppConfig, error) {
+func GetConfig(configFiles ...string) (*models.Config, error) {
 	var configFile string
 
 	if len(configFiles) > 0 {
@@ -23,7 +25,7 @@ func GetConfig(configFiles ...string) (*AppConfig, error) {
 	}
 	defer file.Close()
 
-	config := &AppConfig{}
+	config := &models.Config{}
 	decoder := yaml.NewDecoder(file)
 	err = decoder.Decode(config)
 	if err != nil && err != io.EOF {

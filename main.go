@@ -1,9 +1,9 @@
 package main
 
 import (
-	"fmt"
+	bot "songwhip_bot/modules"
 )
 
 func main() {
-	fmt.Println("Hello, Discord Bot!")
+	bot.Start()
 }

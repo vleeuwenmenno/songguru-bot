@@ -1,4 +1,4 @@
-package main
+package services
 
 import (
 	th "songwhip_bot/testing"

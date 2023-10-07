@@ -1,4 +1,4 @@
-package main
+package config
 
 import (
 	th "songwhip_bot/testing"

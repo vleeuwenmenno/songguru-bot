@@ -1,6 +1,6 @@
-package main
+package models
 
-type AppConfig struct {
+type Config struct {
 	Discord struct {
 		BotToken string `yaml:"bot_token"`
 	} `yaml:"discord"`
