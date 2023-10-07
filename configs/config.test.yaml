@@ -1,10 +1,13 @@
 discord:
-  bot_token: MOCK_BOT_TOKEN
+  bot_token: TOKEN_HERE
   admin_role_name: SongwhipAdmin
-intents:
+
+intents: 
   - Guilds         # Needed for keeping track of guilds
   - GuildMessages  # Needed to look for music links
   - GuildMembers   # Needed to find guild owner for web portal access
+
+database_path: ./configs/database.db
 default_guild_settings:
   keep_original_messages:
     enabled: true

@@ -1,0 +1,10 @@
+version: "3"
+services:
+  songshizz-bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # image: "stardebris/songshizz-bot"
+    restart: unless-stopped
+    volumes:
+      - "./configs:/app/configs"

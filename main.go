@@ -26,7 +26,7 @@ func NewApp() (*models.App, error) {
 	}
 
 	// Setup database
-	db, err := db.SetupDB()
+	db, err := db.SetupDB(config)
 
 	if err != nil {
 		return nil, fmt.Errorf("error setting up database: %w", err)

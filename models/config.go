@@ -19,5 +19,6 @@ type Config struct {
 			AllowOverride bool `yaml:"allow_members_override"`
 		} `yaml:"simple_mode"`
 	} `yaml:"default_guild_settings"`
-	Intents []string `yaml:"intents"`
+	Intents      []string `yaml:"intents"`
+	DatabasePath string   `yaml:"database_path"`
 }
