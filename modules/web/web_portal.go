@@ -71,21 +71,17 @@ func StartWebPortal(router *gin.Engine, app *models.App) {
 			app.DB.Create(&memberSettings)
 		}
 
-		app.DB.Model(&dbModels.MemberSetting{}).Where("ID = ?", memberSettings.ID).Updates(dbModels.MemberSetting{
-			SimpleMode:          saveSettingsRequest.MemberSettings.SimpleMode,
-			MentionOnlyMode:     saveSettingsRequest.MemberSettings.MentionOnlyMode,
-			KeepOriginalMessage: saveSettingsRequest.MemberSettings.KeepOriginalMessage,
-		})
+		app.DB.Model(&dbModels.MemberSetting{}).Where("ID = ?", memberSettings.ID).Update("SimpleMode", saveSettingsRequest.MemberSettings.SimpleMode)
+		app.DB.Model(&dbModels.MemberSetting{}).Where("ID = ?", memberSettings.ID).Update("MentionOnlyMode", saveSettingsRequest.MemberSettings.MentionOnlyMode)
+		app.DB.Model(&dbModels.MemberSetting{}).Where("ID = ?", memberSettings.ID).Update("KeepOriginalMessage", saveSettingsRequest.MemberSettings.KeepOriginalMessage)
 
 		if webToken.AdminToken {
-			app.DB.Model(&dbModels.GuildSetting{}).Where("ID = ?", webToken.GuildID).Updates(dbModels.GuildSetting{
-				SimpleMode:                       saveSettingsRequest.ServerSettings.SimpleMode,
-				MentionOnlyMode:                  saveSettingsRequest.ServerSettings.MentionOnlyMode,
-				KeepOriginalMessage:              saveSettingsRequest.ServerSettings.KeepOriginalMessage,
-				AllowOverrideSimpleMode:          saveSettingsRequest.ServerSettings.AllowOverrideSimpleMode,
-				AllowOverrideMentionOnlyMode:     saveSettingsRequest.ServerSettings.AllowOverrideMentionOnlyMode,
-				AllowOverrideKeepOriginalMessage: saveSettingsRequest.ServerSettings.AllowOverrideKeepOriginalMessage,
-			})
+			app.DB.Model(&dbModels.GuildSetting{}).Where("ID = ?", webToken.GuildID).Update("SimpleMode", saveSettingsRequest.ServerSettings.SimpleMode)
+			app.DB.Model(&dbModels.GuildSetting{}).Where("ID = ?", webToken.GuildID).Update("MentionOnlyMode", saveSettingsRequest.ServerSettings.MentionOnlyMode)
+			app.DB.Model(&dbModels.GuildSetting{}).Where("ID = ?", webToken.GuildID).Update("KeepOriginalMessage", saveSettingsRequest.ServerSettings.KeepOriginalMessage)
+			app.DB.Model(&dbModels.GuildSetting{}).Where("ID = ?", webToken.GuildID).Update("AllowOverrideSimpleMode", saveSettingsRequest.ServerSettings.AllowOverrideSimpleMode)
+			app.DB.Model(&dbModels.GuildSetting{}).Where("ID = ?", webToken.GuildID).Update("AllowOverrideMentionOnlyMode", saveSettingsRequest.ServerSettings.AllowOverrideMentionOnlyMode)
+			app.DB.Model(&dbModels.GuildSetting{}).Where("ID = ?", webToken.GuildID).Update("AllowOverrideKeepOriginalMessage", saveSettingsRequest.ServerSettings.AllowOverrideKeepOriginalMessage)
 		}
 
 		c.JSON(http.StatusAccepted, gin.H{"status": "success"})
@@ -93,6 +89,10 @@ func StartWebPortal(router *gin.Engine, app *models.App) {
 
 	router.GET("/", func(c *gin.Context) {
 		indexRouter(c, app, false)
+	})
+
+	router.GET("/heartbeat", func(c *gin.Context) {
+		c.AbortWithStatus(http.StatusOK)
 	})
 
 	router.GET("/changelogs", func(c *gin.Context) {

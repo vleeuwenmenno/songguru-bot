@@ -29,14 +29,15 @@
 
 						<label>
 							<input type="checkbox" name="serverSettingsMentionOnlyMode" {{ if
-								.serverSettings.MentionOnlyMode }}checked{{end}} disabled="{{ .adminToken }}" />
+								.serverSettings.MentionOnlyMode }}checked{{end}} {{ if .adminToken }}
+								{{else}}disabled{{end}} />
 							Server enable<em
 								data-tooltip="Enable mention only mode for everyone on this server/guild"><small>(?)</small></em>
 						</label>
 						<label>
 							<input type="checkbox" name="serverSettingsAllowOverrideMentionOnlyMode" {{ if
-								.serverSettings.AllowOverrideMentionOnlyMode }}checked{{end}}
-								disabled="{{ .adminToken }}" />
+								.serverSettings.AllowOverrideMentionOnlyMode }}checked{{end}} {{ if .adminToken }}
+								{{else}}disabled{{end}} />
 							Allow members to override server setting<em
 								data-tooltip="Allow members to override this setting for this server/guild"><small>(?)</small></em>
 						</label>
@@ -61,13 +62,14 @@
 
 						<label>
 							<input type="checkbox" name="serverSettingsSimpleMode" {{ if .serverSettings.SimpleMode
-								}}checked{{end}} disabled="{{ .adminToken }}" />
+								}}checked{{end}} {{ if .adminToken }} {{else}}disabled{{end}} />
 							Server enable<em
 								data-tooltip="Enable simple mode for everyone on this server/guild"><small>(?)</small></em>
 						</label>
 						<label>
 							<input type="checkbox" name="serverSettingsAllowOverrideSimpleMode" {{ if
-								.serverSettings.AllowOverrideSimpleMode }}checked{{end}} disabled="{{ .adminToken }}" />
+								.serverSettings.AllowOverrideSimpleMode }}checked{{end}} {{ if .adminToken }}
+								{{else}}disabled{{end}} />
 							Allow members to override server setting<em
 								data-tooltip="Allow members to override this setting for this server/guild"><small>(?)</small></em>
 						</label>
@@ -92,23 +94,26 @@
 
 						<label>
 							<input type="checkbox" name="serverSettingsKeepOriginalMessage" {{ if
-								.serverSettings.KeepOriginalMessage }}checked{{end}} disabled="{{ .adminToken }}" />
+								.serverSettings.KeepOriginalMessage }}checked{{end}} {{ if .adminToken }}
+								{{else}}disabled{{end}} />
 							Server enable<em
 								data-tooltip="Enable keeping original messages for everyone on this server/guild"><small>(?)</small></em>
 						</label>
 						<label>
 							<input type="checkbox" name="serverSettingsAllowOverrideKeepOriginalMessage" {{ if
-								.serverSettings.AllowOverrideKeepOriginalMessage }}checked{{end}}
-								disabled="{{ .adminToken }}" />
+								.serverSettings.AllowOverrideKeepOriginalMessage }}checked{{end}} {{ if .adminToken }}
+								{{else}}disabled{{end}} />
 							Allow members to override server setting<em
 								data-tooltip="Allow members to override this setting for this server/guild"><small>(?)</small></em>
 						</label>
 					</p>
 				</details>
 				</p>
-				<small>Note: Make sure your guild has the Songwhip bot added with the proper permissions otherwise you won't be able to use admin settings!</small>
+				<small>Note: Make sure your guild has the Songwhip bot added with the proper permissions otherwise you
+					won't be able to use admin settings!</small>
 			</article>
 			<button class="button" name="submit" type="submit">Save Settings</button>
+			<a class="button secondary" href="/logout?t={{ .token }}">Logout</a>
 		</form>
 	</main>
 	<script>
