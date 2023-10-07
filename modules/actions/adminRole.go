@@ -22,7 +22,7 @@ func EnsureAdminRoleExists(s *discordgo.Session, g *discordgo.Guild, app *models
 }
 
 func EnsureAdminRoleAssigned(s *discordgo.Session, g *discordgo.Guild, app *models.App) {
-	role, err := guildHasAdminRole(g.Roles, app.Config)
+	role, err := GuildHasAdminRole(g.Roles, app.Config)
 
 	if err != nil {
 		logging.PrintLog("Error getting admin role for guild %s (ID: %s)", g.Name, g.ID)
@@ -65,7 +65,7 @@ func conditionallyAddAdminRole(s *discordgo.Session, g *discordgo.Guild, config 
 		return "", err
 	}
 
-	role, err := guildHasAdminRole(roles, config)
+	role, err := GuildHasAdminRole(roles, config)
 
 	// Check discord can tell us if guild has a role called SongwhipAdmin
 	if err != nil {
@@ -84,7 +84,7 @@ func conditionallyAddAdminRole(s *discordgo.Session, g *discordgo.Guild, config 
 	return role, nil
 }
 
-func guildHasAdminRole(roles []*discordgo.Role, config *models.Config) (string, error) {
+func GuildHasAdminRole(roles []*discordgo.Role, config *models.Config) (string, error) {
 	for _, role := range roles {
 		if role.Name == config.Discord.AdminRoleName {
 			return role.ID, nil
