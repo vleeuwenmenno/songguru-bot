@@ -41,7 +41,7 @@ func TestGetConfig(t *testing.T) {
 		t.Errorf("expected serviceA service icon to be '<:serviceA:12345678901234567>', but got %q", serviceA.Icon)
 	}
 
-	if serviceA.Color != "#ff0000" {
+	if serviceA.Color != 0xff0000 {
 		t.Errorf("expected serviceA service color to be '#ff0000', but got %q", serviceA.Color)
 	}
 

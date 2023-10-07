@@ -2,11 +2,13 @@ package songwhip
 
 import (
 	"errors"
+	"fmt"
 	"regexp"
 	"songwhip_bot/models"
 	dbModels "songwhip_bot/modules/db/models"
 	"songwhip_bot/modules/logging"
 	songwhipapi "songwhip_bot/modules/songwhip_api"
+	songwhipModels "songwhip_bot/modules/songwhip_api/models"
 	"strings"
 
 	"github.com/bwmarrin/discordgo"
@@ -52,11 +54,86 @@ func ProcessMessage(app *models.App, session *discordgo.Session, event *discordg
 				return
 			}
 
-			// TODO: Add support for embeds
-			session.ChannelMessageSend(event.ChannelID, "WIP ... not simple mode: "+info.URL)
+			embed := buildEmbed(info, shouldDeleteMessage, event, link, session, service)
+			session.ChannelMessageSendEmbed(event.ChannelID, embed)
 			return
 		}
 	}
+}
+
+func buildEmbed(info *songwhipModels.SongwhipInfo, shouldDeleteMessage bool, event *discordgo.MessageCreate, link *string, session *discordgo.Session, service models.Service) *discordgo.MessageEmbed {
+	newArtists := []string{}
+	for _, artist := range info.Artists {
+		newArtists = append(newArtists, artist.Name)
+	}
+
+	artists := strings.Join(newArtists, ", ")
+	desc := fmt.Sprintf("**Track:** %s\n**Artist:** %s\n**Stream it from** %s", info.Name, artists, buildStreamingServices(info))
+	displayName := event.Message.Member.Nick
+
+	if displayName == "" {
+		displayName = event.Message.Author.Username
+	}
+
+	if shouldDeleteMessage {
+		contents := event.Message.Content
+
+		contents = strings.Replace(contents, *link, "", -1)
+		contents = strings.Replace(contents, session.State.User.Mention(), "", -1)
+
+		if strings.Trim(contents, " ") != "" {
+			desc += "\n\n**" + displayName + " says** " + contents + "\n"
+		}
+	}
+
+	embed := &discordgo.MessageEmbed{
+		Title: info.Name + " - " + artists,
+		URL:   info.URL,
+		Image: &discordgo.MessageEmbedImage{
+			URL: info.Image,
+		},
+		Description: desc,
+		Color:       service.Color,
+		Footer: &discordgo.MessageEmbedFooter{
+			Text:    "Shared by " + displayName,
+			IconURL: event.Author.AvatarURL(""),
+		},
+	}
+	return embed
+}
+
+func buildStreamingServices(info *songwhipModels.SongwhipInfo) string {
+	desc := ""
+
+	if info.Links.Spotify {
+		desc += "<:spotify:860992370954469407> "
+	}
+
+	if info.Links.Deezer {
+		desc += "<:deezer:860992333914570772> "
+	}
+
+	if info.Links.Itunes {
+		desc += "<:applemusic:860995200797507604> "
+	}
+
+	if info.Links.YoutubeMusic {
+		desc += "<:youtubemusic:860994648888836118> "
+	}
+
+	if info.Links.Youtube {
+		desc += "<:youtube:860992285483335730> "
+	}
+
+	if info.Links.Pandora {
+		desc += "<:pandora:860992558519418910> "
+	}
+
+	if info.Links.Tidal {
+		desc += "<:tidal:860992188434612245> "
+	}
+
+	return desc
 }
 
 func evaluateSimpleMode(app *models.App, session *discordgo.Session, message *discordgo.Message) bool {

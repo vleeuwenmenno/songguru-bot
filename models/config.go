@@ -21,4 +21,9 @@ type Config struct {
 	} `yaml:"default_guild_settings"`
 	Intents      []string `yaml:"intents"`
 	DatabasePath string   `yaml:"database_path"`
+	WebPortal    struct {
+		Port      int    `yaml:"port"`
+		URL       string `yaml:"url"`
+		DebugMode bool   `yaml:"debug_mode"`
+	} `yaml:"web_portal"`
 }

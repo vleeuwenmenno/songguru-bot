@@ -4,10 +4,15 @@ import (
 	"fmt"
 	"songwhip_bot/models"
 	"songwhip_bot/modules/bot"
-	config "songwhip_bot/modules/config/discord"
+	config "songwhip_bot/modules/config/app"
 	"songwhip_bot/modules/config/services"
 	"songwhip_bot/modules/db"
+	dbModels "songwhip_bot/modules/db/models"
 	"songwhip_bot/modules/logging"
+	"songwhip_bot/modules/web"
+	"sync"
+
+	"github.com/gin-gonic/gin"
 )
 
 func NewApp() (*models.App, error) {
@@ -32,6 +37,9 @@ func NewApp() (*models.App, error) {
 		return nil, fmt.Errorf("error setting up database: %w", err)
 	}
 
+	// Clear all web tokens
+	db.Unscoped().Where("1 = 1").Delete(&dbModels.SettingsWebToken{})
+
 	return &models.App{
 		Config:   config,
 		Services: services,
@@ -52,5 +60,22 @@ func main() {
 		panic(err)
 	}
 
+	var wg sync.WaitGroup
+	wg.Add(1)
+
+	go func() {
+		router := gin.Default()
+		if app.Config.WebPortal.DebugMode {
+			gin.SetMode(gin.DebugMode)
+		} else {
+			gin.SetMode(gin.ReleaseMode)
+		}
+
+		web.StartWebPortal(router, app)
+		wg.Done()
+	}()
+
 	bot.Start(app)
+
+	wg.Wait()
 }

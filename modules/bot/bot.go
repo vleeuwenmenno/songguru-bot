@@ -5,7 +5,7 @@ import (
 	"os/signal"
 	"songwhip_bot/models"
 	"songwhip_bot/modules/bot/handlers"
-	config "songwhip_bot/modules/config/discord"
+	config "songwhip_bot/modules/config/app"
 	"songwhip_bot/modules/logging"
 	"syscall"
 
@@ -38,6 +38,7 @@ func (b *Bot) AddHandlers() {
 	b.Session.AddHandler(handlers.NewGuildDeleteHandler(b))
 	b.Session.AddHandler(handlers.NewMessageCreateHandler(b))
 	b.Session.AddHandler(handlers.NewReadyHandler(b))
+	b.Session.AddHandler(handlers.NewInteractionCreateHandler(b))
 }
 
 func (b *Bot) Start(app *models.App) {
@@ -51,6 +52,29 @@ func (b *Bot) Start(app *models.App) {
 	if err != nil {
 		logging.PrintLog("error opening connection,", err)
 		panic(err)
+	}
+
+	commands := []*discordgo.ApplicationCommand{
+		{
+			Name:        "settings",
+			Description: "Request a settings edit link",
+		},
+		{
+			Name:        "changelog",
+			Description: "View the changelog of the bot",
+		},
+	}
+
+	logging.PrintLog("Registering commands...")
+	registeredCommands := make([]*discordgo.ApplicationCommand, len(commands))
+	for i, v := range commands {
+		cmd, err := b.Session.ApplicationCommandCreate(b.Session.State.User.ID, "", v)
+		if err != nil {
+			logging.PrintLog("Failed to register command '%v'. Err: %v", v.Name, err)
+		}
+
+		logging.PrintLog("- registered command '%v'", v.Name)
+		registeredCommands[i] = cmd
 	}
 
 	logging.PrintLog("Bot is now running.  Press CTRL-C to exit.")

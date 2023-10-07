@@ -18,3 +18,8 @@ default_guild_settings:
   simple_mode: 
     enabled: true
     allow_members_override: false
+
+web_portal:
+  port: 8080
+  url: http://localhost:8080
+  debug_mode: false
