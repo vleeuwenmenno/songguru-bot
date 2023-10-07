@@ -19,7 +19,7 @@ func TestGetConfig(t *testing.T) {
 	}
 
 	// Assert the value of BotToken
-	expectedBotToken := "MOCK_BOT_TOKEN"
+	expectedBotToken := "TOKEN_HERE"
 	if config.Discord.BotToken != expectedBotToken {
 		t.Errorf("unexpected bot token: got %s, want %s", config.Discord.BotToken, expectedBotToken)
 	}
