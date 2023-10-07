@@ -1,0 +1,6 @@
+{
+  "status": "error",
+  "error": {
+    "message": "[ApiError] 400"
+  }
+}

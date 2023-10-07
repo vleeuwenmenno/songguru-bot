@@ -1,0 +1,291 @@
+{
+    "type": "track",
+    "id": 1786664,
+    "path": "sitting-duck/setting-sails",
+    "pagePath": "/sitting-duck/setting-sails",
+    "name": "Setting Sails",
+    "image": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/28/28/d4/2828d459-dffd-b35a-2f3f-29fc15b74397/984201c5-1876-498b-bf6f-530739992abe.jpg/1400x1400bb.jpg",
+    "links": {
+      "qobuz": true,
+      "tidal": true,
+      "amazon": true,
+      "deezer": true,
+      "itunes": true,
+      "napster": true,
+      "pandora": true,
+      "spotify": true,
+      "youtube": true,
+      "soundcloud": true,
+      "amazonMusic": true,
+      "itunesStore": true,
+      "youtubeMusic": true
+    },
+    "linksCountries": [
+      "NL"
+    ],
+    "sourceCountry": "NL",
+    "artists": [
+      {
+        "type": "artist",
+        "id": 977776,
+        "path": "sitting-duck",
+        "pagePath": "/sitting-duck",
+        "name": "sitting duck",
+        "image": "https://i.scdn.co/image/ab6761610000e5eb57c0309d3e813a2537518cf3",
+        "links": {
+          "qobuz": [
+            {
+              "link": "https://open.qobuz.com/artist/7185970",
+              "countries": null
+            }
+          ],
+          "tidal": [
+            {
+              "link": "https://listen.tidal.com/artist/18324675",
+              "countries": [
+                "US"
+              ]
+            }
+          ],
+          "amazon": [
+            {
+              "link": "https://amazon.com/dp/B084ZB97S7",
+              "countries": [
+                "US"
+              ]
+            }
+          ],
+          "audius": [
+            {
+              "link": "https://audius.co/Sittingduckbeats",
+              "countries": null
+            }
+          ],
+          "deezer": [
+            {
+              "link": "https://www.deezer.com/artist/85750342",
+              "countries": null
+            }
+          ],
+          "itunes": [
+            {
+              "link": "https://music.apple.com/{country}/artist/sitting-duck/1498710949?app=music",
+              "countries": [
+                "US"
+              ]
+            }
+          ],
+          "pandora": [
+            {
+              "link": "https://www.pandora.com/artist/sitting-duck/ARwVbkxxq7XwVX2",
+              "countries": [
+                "US"
+              ]
+            }
+          ],
+          "spotify": [
+            {
+              "link": "https://open.spotify.com/artist/7nlZWVZ0U8EVad0g71xiZt",
+              "countries": null
+            }
+          ],
+          "youtube": [
+            {
+              "link": "https://youtube.com/channel/UCDaGZP_LZ3M_0lN96kji67g",
+              "countries": null
+            }
+          ],
+          "bandcamp": [
+            {
+              "link": "https://sittingducktheband.bandcamp.com",
+              "countries": null
+            }
+          ],
+          "audiomack": [
+            {
+              "link": "https://audiomack.com/sitting-duck",
+              "countries": null
+            }
+          ],
+          "lineMusic": [
+            {
+              "link": "https://music.line.me/webapp/artist/mi0000000013a9b66e",
+              "countries": null
+            }
+          ],
+          "soundcloud": [
+            {
+              "link": "https://soundcloud.com/sitting-duck-800561335?id=219198370",
+              "countries": null
+            }
+          ],
+          "amazonMusic": [
+            {
+              "link": "https://music.amazon.com/artists/B084ZB97S7",
+              "countries": [
+                "US"
+              ]
+            }
+          ],
+          "itunesStore": [
+            {
+              "link": "https://music.apple.com/{country}/artist/sitting-duck/1498710949?app=itunes",
+              "countries": [
+                "US"
+              ]
+            }
+          ],
+          "musicBrainz": [
+            {
+              "link": "https://musicbrainz.org/artist/e7523063-91d0-4ad5-ac54-d80a40681b6d",
+              "countries": null
+            }
+          ],
+          "youtubeMusic": [
+            {
+              "link": "https://music.youtube.com/browse/UCDaGZP_LZ3M_0lN96kji67g",
+              "countries": null
+            }
+          ]
+        },
+        "description": "making cosy beats in my bedroom",
+        "linksCountries": [
+          "US"
+        ],
+        "sourceCountry": "US",
+        "spotifyId": "7nlZWVZ0U8EVad0g71xiZt",
+        "createdAtTimestamp": 1676387682780,
+        "refreshedAtTimestamp": 1677001901140
+      },
+      {
+        "type": "artist",
+        "id": 631057,
+        "path": "mondoloops",
+        "pagePath": "/mondoloops",
+        "name": "Mondo Loops",
+        "image": "https://i.scdn.co/image/ab6761610000e5eb6aae04735317de43379b8ebe",
+        "links": {
+          "tidal": [
+            {
+              "link": "https://listen.tidal.com/artist/16594073",
+              "countries": [
+                "US"
+              ]
+            }
+          ],
+          "amazon": [
+            {
+              "link": "https://amazon.com/dp/B07WJFMKBX",
+              "countries": [
+                "US"
+              ]
+            }
+          ],
+          "audius": [
+            {
+              "link": "https://audius.co/Mondoloops",
+              "countries": null
+            }
+          ],
+          "deezer": [
+            {
+              "link": "https://www.deezer.com/artist/117812942",
+              "countries": null
+            }
+          ],
+          "itunes": [
+            {
+              "link": "https://music.apple.com/{country}/artist/mondo-loops/1476848938?app=music",
+              "countries": [
+                "US"
+              ]
+            }
+          ],
+          "discogs": [
+            {
+              "link": "https://www.discogs.com/artist/7855209-Mondo-Loops",
+              "countries": null
+            }
+          ],
+          "napster": [
+            {
+              "link": "https://napster.com/mondo-loops",
+              "countries": null
+            }
+          ],
+          "pandora": [
+            {
+              "link": "https://www.pandora.com/artist/mondo-loops/ARwmmKbKtjm3p69",
+              "countries": [
+                "US"
+              ]
+            }
+          ],
+          "spotify": [
+            {
+              "link": "https://open.spotify.com/artist/1XFN3VcuKr4tsTtQlRiTgK",
+              "countries": null
+            }
+          ],
+          "youtube": [
+            {
+              "link": "https://youtube.com/channel/UCNFKlIyDJTdmV1oeHdSZ0Xg",
+              "countries": null
+            }
+          ],
+          "bandcamp": [
+            {
+              "link": "https://mondoloops.bandcamp.com",
+              "countries": null
+            }
+          ],
+          "soundcloud": [
+            {
+              "link": "https://soundcloud.com/mondoloops-music?id=897574982",
+              "countries": null
+            }
+          ],
+          "amazonMusic": [
+            {
+              "link": "https://music.amazon.com/artists/B07WJFMKBX",
+              "countries": [
+                "US"
+              ]
+            }
+          ],
+          "itunesStore": [
+            {
+              "link": "https://music.apple.com/{country}/artist/mondo-loops/1476848938?app=itunes",
+              "countries": [
+                "US"
+              ]
+            }
+          ],
+          "musicBrainz": [
+            {
+              "link": "https://musicbrainz.org/artist/ad6f94ac-951f-406a-afa0-af8feb89efab",
+              "countries": null
+            }
+          ],
+          "youtubeMusic": [
+            {
+              "link": "https://music.youtube.com/browse/UCNFKlIyDJTdmV1oeHdSZ0Xg",
+              "countries": null
+            }
+          ]
+        },
+        "description": "Guitar player and producer from Chester, UK - Making chilled lofi beats and melodic guitar loops",
+        "linksCountries": [
+          "US"
+        ],
+        "sourceCountry": "US",
+        "spotifyId": "1XFN3VcuKr4tsTtQlRiTgK",
+        "createdAtTimestamp": 1626871849367,
+        "refreshedAtTimestamp": 1628393935808
+      }
+    ],
+    "createdAtTimestamp": 1696649294392,
+    "refreshedAtTimestamp": 1696649595420,
+    "url": "https://songwhip.com/sitting-duck/setting-sails"
+  }
+  

@@ -24,3 +24,11 @@ func Equal(a, b []string) bool {
 	}
 	return true
 }
+
+func LoadJSON(path string) string {
+	jsonFile, err := os.ReadFile(path)
+	if err != nil {
+		panic(err)
+	}
+	return string(jsonFile)
+}
