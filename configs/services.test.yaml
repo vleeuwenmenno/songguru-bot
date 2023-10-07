@@ -1,15 +1,36 @@
 streaming_services:
-  serviceA:
-    name: ServiceA
-    icon: <:serviceA:12345678901234567>
-    color: 0xff0000
-    urls: 
-      - https://exampleA.link
-      - https://exampleA.com
-  serviceB:
-    name: ServiceB
-    icon: <:serviceB:12345678901234567>
-    color: 0x00ff00
-    urls: 
-      - https://exampleB.link
-      - https://exampleB.com
+  spotify:
+    name: Spotify
+    icon: <:spotify:860992370954469407>
+    color: 0x1DB954
+    urls:
+      - https://spotify.link
+      - https://spotify.com
+      - https://open.spotify.com
+      - https://www.spotify.com
+  deezer:
+    name: Deezer
+    icon: <:deezer:860992333914570772>
+    color: 0x00c7f2
+    urls:
+      - https://deezer.com
+      - https://www.deezer.com
+  youtube:
+    name: "YouTube Music"
+    icon: <:youtube:860992285483335730>
+    color: 0xb2071d
+    urls:
+      - https://music.youtube.com
+  apple_music:
+    name: "Apple Music"
+    icon: <:applemusic:860995200797507604>
+    color: 0xfc3c44
+    urls:
+      - https://music.apple.com/
+  tidal:
+    name: "Tidal"
+    icon: <:tidal:860992188434612245>
+    color: 0xfc3c44
+    urls:
+      - https://tidal.com/
+      - https://www.tidal.com/

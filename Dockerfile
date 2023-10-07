@@ -7,6 +7,8 @@ COPY go.mod go.sum ./
 RUN go mod download
 
 COPY . ./
+
+RUN rm -rf configs/
 RUN GO111MODULE=on CGO_ENABLED=1 GOOS=linux go build -ldflags="-w -s" -o /app/songshizz_bot
 
 HEALTHCHECK --interval=10s --timeout=5s --start-period=30s \ 
