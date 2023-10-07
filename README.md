@@ -1,7 +1,7 @@
 # Songwhip Discord bot
 
 A songwhip discord bot that converts your song links to a nice looking embed.
-#### [Add this Bot to my Discord server!](https://discord.ly/songwhip) - [Direct](https://discord.com/api/oauth2/authorize?client_id=860899901020700684&permissions=2147870784&scope=bot%20applications.commands)
+#### [Add this Bot to my Discord server!](https://discord.ly/songwhip) - [Direct](https://discord.com/api/oauth2/authorize?client_id=860899901020700684&permissions=689610975232&scope=bot)
 
 ![alt text](https://github.com/vleeuwenmenno/songwhip-bot/raw/develop/images/preview.png)
 

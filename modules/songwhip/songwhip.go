@@ -20,15 +20,16 @@ func ProcessMessage(app *models.App, session *discordgo.Session, event *discordg
 	shouldDeleteMessage := evaluateDeleteMessage(app.DB, session, event.Message)
 	simpleMode := evaluateSimpleMode(app, session, event.Message)
 
-	logging.PrintLog("message for guild %s delete? %v, simple mode? %v, mention only mode? %v, continue? %v", event.Message.GuildID, shouldDeleteMessage, simpleMode, mentionOnlyMode, mayContinue)
+	link, err := extractLink(event.Content)
+	linkValid := err == nil && link != nil
 
-	if !mayContinue {
+	logging.PrintLog("message user %s in guild %s, link valid? %v, delete? %v, simple mode? %v, mention only mode? %v, may continue? %v", event.Message.Author.ID, event.Message.GuildID, linkValid, shouldDeleteMessage, simpleMode, mentionOnlyMode, mayContinue)
+
+	if err != nil {
 		return
 	}
 
-	link, err := extractLink(event.Content)
-	if err != nil {
-		logging.PrintLog(err.Error(), err)
+	if !mayContinue {
 		return
 	}
 
