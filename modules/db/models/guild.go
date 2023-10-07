@@ -8,6 +8,7 @@ import (
 
 type Guild struct {
 	gorm.Model
-	ID       string
-	JoinedAt time.Time
+	ID          string
+	AdminRoleID string
+	JoinedAt    time.Time
 }

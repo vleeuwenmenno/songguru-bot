@@ -1,5 +1,6 @@
 discord:
   bot_token: MOCK_BOT_TOKEN
 intents:
-  - Guilds
-  - GuildMessages
+  - Guilds         # Needed for keeping track of guilds
+  - GuildMessages  # Needed to look for music links
+  - GuildMembers   # Needed to find guild owner for web portal access
