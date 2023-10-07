@@ -6,19 +6,37 @@ import (
 	"songwhip_bot/modules/logging"
 
 	"github.com/bwmarrin/discordgo"
+	"golang.org/x/exp/slices"
 )
 
 // Ensures the admin role exists in the guild
 // If it doesn't exist, it will be created and assigned to the bot
 //
 // Returns the ID of the admin role
-func EnsureAdminRole(s *discordgo.Session, g *discordgo.Guild, app *models.App) {
+func EnsureAdminRoleExists(s *discordgo.Session, g *discordgo.Guild, app *models.App) {
 	role, err := conditionallyAddAdminRole(s, g, app.Config)
 	if err != nil {
 		logging.PrintLog("Error adding/getting admin role for/from guild: %s", err)
 		return
 	}
 	app.DB.Model(&dbModels.Guild{}).Where("ID = ?", g.ID).Update("AdminRoleID", *role)
+}
+
+func EnsureAdminRoleAssigned(s *discordgo.Session, g *discordgo.Guild, app *models.App) {
+	role := guildHasAdminRole(g.Roles, app.Config)
+	botRoles, err := s.GuildMember(g.ID, s.State.User.ID)
+
+	if err != nil {
+		logging.PrintLog("Error getting bot roles")
+	}
+
+	if !slices.Contains(botRoles.Roles, *role) {
+		if s.GuildMemberRoleAdd(g.ID, s.State.User.ID, *role) != nil {
+			logging.PrintLog("Error assigning admin role to bot")
+		}
+
+		logging.PrintLog("Bot got admin role assigned for guild %s (ID: %s) (RoleID: %s)", g.Name, g.ID, *role)
+	}
 }
 
 // Adds the admin role if it doesn't exist in the guild
@@ -46,15 +64,8 @@ func conditionallyAddAdminRole(s *discordgo.Session, g *discordgo.Guild, config 
 		}
 
 		logging.PrintLog("	- added admin role %s for guild %s (ID: %s)", role.Name, g.Name, g.ID)
-
-		if s.GuildMemberRoleAdd(g.ID, s.State.User.ID, role.ID) != nil {
-			logging.PrintLog("Error assigning admin role to bot")
-			return nil, err
-		}
-
-		logging.PrintLog("	- assigned bot the admin role for guild %s (ID: %s)", g.Name, g.ID)
-		return &role.ID, nil
 	}
+
 	return role, nil
 }
 

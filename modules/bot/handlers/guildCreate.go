@@ -13,6 +13,7 @@ func NewGuildCreateHandler(b Bot) func(s *discordgo.Session, g *discordgo.GuildC
 		actions.UpdateWatchStatus(s)
 
 		actions.EnsureGuildIsWatched(g.Guild, b.GetApp())
-		actions.EnsureAdminRole(s, g.Guild, b.GetApp())
+		actions.EnsureAdminRoleExists(s, g.Guild, b.GetApp())
+		actions.EnsureAdminRoleAssigned(s, g.Guild, b.GetApp())
 	}
 }

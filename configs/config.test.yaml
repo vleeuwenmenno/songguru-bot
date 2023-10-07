@@ -1,5 +1,6 @@
 discord:
   bot_token: MOCK_BOT_TOKEN
+  admin_role_name: SongwhipAdmin
 intents:
   - Guilds         # Needed for keeping track of guilds
   - GuildMessages  # Needed to look for music links

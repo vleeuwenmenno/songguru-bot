@@ -13,10 +13,10 @@ GuildSettings
 */
 type GuildSettings struct {
 	gorm.Model
-	ID                  string
+	ID                  string `gorm:"primaryKey"`
 	SimpleMode          bool
 	MentionOnlyMode     bool
 	KeepOriginalMessage bool
-	GuildRefer          int
+	GuildRefer          string
 	Guild               Guild `gorm:"foreignKey:GuildRefer"`
 }
