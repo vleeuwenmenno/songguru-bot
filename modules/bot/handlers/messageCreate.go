@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"songwhip_bot/modules/songwhip"
+	"songguru_bot/modules/bot/processing"
 
 	"github.com/bwmarrin/discordgo"
 )
@@ -12,6 +12,6 @@ func NewMessageCreateHandler(b Bot) func(s *discordgo.Session, m *discordgo.Mess
 			return
 		}
 
-		songwhip.ProcessMessage(b.GetApp(), s, m)
+		processing.ProcessMessage(b.GetApp(), s, m)
 	}
 }

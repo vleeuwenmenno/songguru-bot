@@ -1,8 +1,8 @@
-package songwhipapi
+package songguruapi
 
 import (
 	"errors"
-	th "songwhip_bot/testing"
+	th "songguru_bot/testing"
 	"strings"
 	"testing"
 
@@ -12,9 +12,9 @@ import (
 func TestGetInfo(t *testing.T) {
 	th.Setup(t)
 	defer gock.Off()
-	jsonFile := th.LoadJSON("modules/songwhip_api/data/success.json")
+	jsonFile := th.LoadJSON("modules/songguru_api/data/success.json")
 
-	gock.New("https://songwhip.com").
+	gock.New("https://songguru.com").
 		Post("").
 		Reply(200).
 		JSON(jsonFile)
@@ -37,9 +37,9 @@ func TestGetInfo(t *testing.T) {
 func TestGetInfo_MalformedResponse(t *testing.T) {
 	th.Setup(t)
 	defer gock.Off()
-	jsonFile := th.LoadJSON("modules/songwhip_api/data/malformed.json")
+	jsonFile := th.LoadJSON("modules/songguru_api/data/malformed.json")
 
-	gock.New("https://songwhip.com").
+	gock.New("https://songguru.com").
 		Post("").
 		Reply(200).
 		JSON(jsonFile)
@@ -58,7 +58,7 @@ func TestGetInfo_NetworkError(t *testing.T) {
 	defer gock.Off()
 
 	timeoutErr := errors.New("dial tcp i/o timeout")
-	gock.New("https://songwhip.com").Post("/").Reply(200).SetError(timeoutErr)
+	gock.New("https://songguru.com").Post("/").Reply(200).SetError(timeoutErr)
 
 	// Simulate a network error by not setting up a response
 	link := "https://open.spotify.com/track/3qXXI66oCX4veelxLACqZ3?si=4cca301a271d4550"

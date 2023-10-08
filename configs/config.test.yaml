@@ -1,6 +1,6 @@
 discord:
   bot_token: TOKEN_HERE
-  admin_role_name: SongwhipAdmin
+  admin_role_name: SongGuruAdmin
 
 intents: 
   - Guilds         # Needed for keeping track of guilds

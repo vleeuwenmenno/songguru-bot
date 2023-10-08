@@ -3,8 +3,8 @@ package web
 import (
 	"fmt"
 	"net/http"
-	"songwhip_bot/models"
-	dbModels "songwhip_bot/modules/db/models"
+	"songguru_bot/models"
+	dbModels "songguru_bot/modules/db/models"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -131,7 +131,7 @@ func indexRouter(c *gin.Context, app *models.App, modified bool) {
 		app.DB.Create(&memberSettings)
 	}
 
-	c.HTML(http.StatusOK, "index.html", gin.H{
+	c.HTML(http.StatusOK, "account.html", gin.H{
 		"title":          "Settings",
 		"token":          token,
 		"memberSettings": memberSettings,

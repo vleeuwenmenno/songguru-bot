@@ -1,6 +1,6 @@
 package handlers
 
-import "songwhip_bot/models"
+import "songguru_bot/models"
 
 type Bot interface {
 	GetApp() *models.App

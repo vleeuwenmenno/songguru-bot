@@ -1,7 +1,7 @@
 package services
 
 import (
-	th "songwhip_bot/testing"
+	th "songguru_bot/testing"
 	"testing"
 )
 

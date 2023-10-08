@@ -1,9 +1,9 @@
 package actions
 
 import (
-	"songwhip_bot/models"
-	dbModels "songwhip_bot/modules/db/models"
-	"songwhip_bot/modules/logging"
+	"songguru_bot/models"
+	dbModels "songguru_bot/modules/db/models"
+	"songguru_bot/modules/logging"
 
 	"github.com/bwmarrin/discordgo"
 )
@@ -67,7 +67,7 @@ func conditionallyAddAdminRole(s *discordgo.Session, g *discordgo.Guild, config 
 
 	role, err := GuildHasAdminRole(roles, config)
 
-	// Check discord can tell us if guild has a role called SongwhipAdmin
+	// Check discord can tell us if guild has a role called SongGuruAdmin
 	if err != nil {
 		role, err := s.GuildRoleCreate(g.ID, &discordgo.RoleParams{
 			Name: config.Discord.AdminRoleName,

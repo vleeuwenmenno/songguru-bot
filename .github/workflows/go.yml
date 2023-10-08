@@ -23,7 +23,7 @@ jobs:
       run: go mod download
 
     - name: Build
-      run: go build -v -o /github/workspace/build/songwhip_bot
+      run: go build -v -o /github/workspace/build/songguru_bot
 
     - name: Test
       run: WORKSPACE_DIR=$(pwd) go test -v ./...

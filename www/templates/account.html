@@ -1,0 +1,191 @@
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="css/pico.min.css">
+	<title>{{ .title }}</title>
+</head>
+
+<body>
+	<main>
+		<form class="container" action="/?t={{ .token }}" method="POST">
+			<article>
+				<h1>{{ .title }}</h1>
+				<h3 class="secondary">Mention only mode</h3>
+				<p>
+					When mention only mode is enabled it causes the bot to only respond to you when you add a mention to
+					the message of the bot.
+				</p>
+				<p>
+					<label>
+						<input type="checkbox" value="true" name="memberSettingsMentionOnlyMode" {{ if
+							.memberSettings.MentionOnlyMode }}checked{{end}} />
+						Enable<em data-tooltip="Enable mention only mode"><small>(?)</small></em>
+					</label>
+				<details>
+					<summary>Admin settings</summary>
+					<p>
+
+						<label>
+							<input type="checkbox" name="serverSettingsMentionOnlyMode" {{ if
+								.serverSettings.MentionOnlyMode }}checked{{end}} {{ if .adminToken }}
+								{{else}}disabled{{end}} />
+							Server enable<em
+								data-tooltip="Enable mention only mode for everyone on this server/guild"><small>(?)</small></em>
+						</label>
+						<label>
+							<input type="checkbox" name="serverSettingsAllowOverrideMentionOnlyMode" {{ if
+								.serverSettings.AllowOverrideMentionOnlyMode }}checked{{end}} {{ if .adminToken }}
+								{{else}}disabled{{end}} />
+							Allow members to override server setting<em
+								data-tooltip="Allow members to override this setting for this server/guild"><small>(?)</small></em>
+						</label>
+					</p>
+				</details>
+				</p>
+
+				<h3 class="secondary">Simple mode</h3>
+				<p>
+					When simple mode is enabled the bot will instead of responding with an embed just respond with a
+					link.
+				</p>
+				<p>
+					<label>
+						<input type="checkbox" name="memberSettingsSimpleMode" {{ if .memberSettings.SimpleMode
+							}}checked{{end}} />
+						Enable<em data-tooltip="Enable simple mode"><small>(?)</small></em>
+					</label>
+				<details>
+					<summary>Admin settings</summary>
+					<p>
+
+						<label>
+							<input type="checkbox" name="serverSettingsSimpleMode" {{ if .serverSettings.SimpleMode
+								}}checked{{end}} {{ if .adminToken }} {{else}}disabled{{end}} />
+							Server enable<em
+								data-tooltip="Enable simple mode for everyone on this server/guild"><small>(?)</small></em>
+						</label>
+						<label>
+							<input type="checkbox" name="serverSettingsAllowOverrideSimpleMode" {{ if
+								.serverSettings.AllowOverrideSimpleMode }}checked{{end}} {{ if .adminToken }}
+								{{else}}disabled{{end}} />
+							Allow members to override server setting<em
+								data-tooltip="Allow members to override this setting for this server/guild"><small>(?)</small></em>
+						</label>
+					</p>
+				</details>
+				</p>
+
+				<h3 class="secondary">Keep original message</h3>
+				<p>
+					When this is enabled the bot won't delete the message that triggered the bot.
+				</p>
+				<p>
+					<label>
+						<input type="checkbox" name="memberSettingsKeepOriginalMessage" {{ if
+							.memberSettings.KeepOriginalMessage }}checked{{end}} />
+						Enable<em
+							data-tooltip="Enable to keep original messages when you trigger the bot"><small>(?)</small></em>
+					</label>
+				<details>
+					<summary>Admin settings</summary>
+					<p>
+
+						<label>
+							<input type="checkbox" name="serverSettingsKeepOriginalMessage" {{ if
+								.serverSettings.KeepOriginalMessage }}checked{{end}} {{ if .adminToken }}
+								{{else}}disabled{{end}} />
+							Server enable<em
+								data-tooltip="Enable keeping original messages for everyone on this server/guild"><small>(?)</small></em>
+						</label>
+						<label>
+							<input type="checkbox" name="serverSettingsAllowOverrideKeepOriginalMessage" {{ if
+								.serverSettings.AllowOverrideKeepOriginalMessage }}checked{{end}} {{ if .adminToken }}
+								{{else}}disabled{{end}} />
+							Allow members to override server setting<em
+								data-tooltip="Allow members to override this setting for this server/guild"><small>(?)</small></em>
+						</label>
+					</p>
+				</details>
+				</p>
+				<small>Note: Make sure your guild has the SongGuru bot added with the proper permissions otherwise you
+					won't be able to use admin settings!</small>
+					<h3 class="secondary">Keep original message</h3>
+				<p>
+					When this is enabled the bot won't delete the message that triggered the bot.
+				</p>
+				<p>
+					<label>
+						<input type="checkbox" name="memberSettingsKeepOriginalMessage" {{ if
+							.memberSettings.KeepOriginalMessage }}checked{{end}} />
+						Experimental search<em
+							data-tooltip="This uses the bots built-in search feature instead of Songwhip"><small>(?)</small></em>
+					</label>
+				</p>
+			</article>
+			<button class="button" name="submit" type="submit">Save Settings</button>
+			<a class="button secondary" href="/logout?t={{ .token }}">Logout</a>
+		</form>
+	</main>
+	<script>
+		// Function to handle form submission
+		function handleSubmit(event) {
+			event.preventDefault(); // Prevent the default form submission behavior
+
+			// Get form data
+			const form = event.target;
+			const formData = new FormData(form);
+
+			// Convert form data to JSON object
+			const jsonObject = {
+				memberSettings: {
+					MentionOnlyMode: formData.get('memberSettingsMentionOnlyMode') === 'true' || formData.get('memberSettingsMentionOnlyMode') === 'on',
+					SimpleMode: formData.get('memberSettingsSimpleMode') === 'true' || formData.get('memberSettingsSimpleMode') === 'on',
+					KeepOriginalMessage: formData.get('memberSettingsKeepOriginalMessage') === 'true' || formData.get('memberSettingsKeepOriginalMessage') === 'on',
+				},
+				serverSettings: {
+					MentionOnlyMode: formData.get('serverSettingsMentionOnlyMode') === 'true' || formData.get('serverSettingsMentionOnlyMode') === 'on',
+					AllowOverrideMentionOnlyMode: formData.get('serverSettingsAllowOverrideMentionOnlyMode') === 'true' || formData.get('serverSettingsAllowOverrideMentionOnlyMode') === 'on',
+					SimpleMode: formData.get('serverSettingsSimpleMode') === 'true' || formData.get('serverSettingsSimpleMode') === 'on',
+					AllowOverrideSimpleMode: formData.get('serverSettingsAllowOverrideSimpleMode') === 'true' || formData.get('serverSettingsAllowOverrideSimpleMode') === 'on',
+					KeepOriginalMessage: formData.get('serverSettingsKeepOriginalMessage') === 'true' || formData.get('serverSettingsKeepOriginalMessage') === 'on',
+					AllowOverrideKeepOriginalMessage: formData.get('serverSettingsAllowOverrideKeepOriginalMessage') === 'true' || formData.get('serverSettingsAllowOverrideKeepOriginalMessage') === 'on'
+				},
+			};
+
+			console.log(jsonObject);
+
+			// Send JSON data to the server using AJAX
+			const xhr = new XMLHttpRequest();
+			xhr.open('POST', `/?t=${getTokenFromURL()}`);
+			xhr.setRequestHeader('Content-Type', 'application/json');
+			xhr.onload = function () {
+				if (xhr.status === 202) {
+					// Handle successful response
+					console.log('Settings saved successfully');
+
+					// Reload the page
+					window.location.reload();
+				} else {
+					// Handle error response
+					console.error('Error saving settings');
+				}
+			};
+			xhr.send(JSON.stringify(jsonObject));
+		}
+
+		// Function to get the token from the URL
+		function getTokenFromURL() {
+			const urlParams = new URLSearchParams(window.location.search);
+			return urlParams.get('t');
+		}
+
+		// Add event listener to the form submission
+		const form = document.querySelector('.container');
+		form.addEventListener('submit', handleSubmit);
+	</script>
+
+</body>
+
+</html>

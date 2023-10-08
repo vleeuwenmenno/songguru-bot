@@ -1,7 +1,7 @@
 package commands
 
 import (
-	"songwhip_bot/models"
+	"songguru_bot/models"
 
 	"github.com/bwmarrin/discordgo"
 )

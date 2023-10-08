@@ -3,7 +3,7 @@ package services
 import (
 	"fmt"
 	"os"
-	"songwhip_bot/models"
+	"songguru_bot/models"
 
 	"gopkg.in/yaml.v3"
 )
