@@ -26,6 +26,20 @@ Alternatively you can build a container yourself as follows:
 5. Run the docker image `docker compose up -d`
 6. Enjoy~ `docker stats <container>`
 
+## FAQ
+
+1. How do I change my server/member preferences?
+   - In the guild/server you want to do this, use the command `/settings`. This will generate a one-time link where you can edit your settings and your guild/server settings if you have the proper role for that.
+
+2. I already had the bot on my server, but I can't edit the admin settings?
+   - Due to the v2.0.0 update, the bot adds new features that require the "manage roles" permission to work properly. You may need to invite the bot to your server again. The invite link provided in this README has been updated to include the proper permissions. Alternatively, you can create a new role called `SongwhipAdmin`, which should also work. This needs to be verified (#28).
+
+3. I shared the settings link, and now all my settings have changed?!
+   - Please avoid sharing this link. You can generate a new one, and all links are only valid for 15 minutes. Although no harm can be done with the link, it's always better to keep it private. In the future, we might change the way these links work to prevent multiple sessions by locking them to your IP or using another method.
+
+4. I tried changing the admin settings, but even after adding the admin role to my Discord user on the guild, I still can't change admin settings?
+   - Make sure you have added the proper role and generated a new settings link after doing so. The link won't detect role changes once it has been generated, so you need to generate a new one.
+
 ## Contribute
 
 I am happy to accept contributions, fork the project make your changes and create a PR. Whenver I have time I will review it and merge it ;)
