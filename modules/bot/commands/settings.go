@@ -56,7 +56,7 @@ func settings(session *discordgo.Session, event *discordgo.InteractionCreate, ap
 	session.InteractionRespond(event.Interaction, &discordgo.InteractionResponse{
 		Type: discordgo.InteractionResponseChannelMessageWithSource,
 		Data: &discordgo.InteractionResponseData{
-			Content: "To change your settings click on [the following link](" + config.WebPortal.URL + "?t=" + webToken.ID + ")\n**This link will expire in 15 minutes.**",
+			Content: "To change your settings click on [the following link](" + config.WebPortal.URL + "?t=" + webToken.ID + ")\n**Don't share this link with anyone! The link will expire in 15 minutes.**",
 			Flags:   discordgo.MessageFlagsEphemeral,
 		},
 	})
