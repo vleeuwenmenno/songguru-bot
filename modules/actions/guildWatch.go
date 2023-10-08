@@ -1,9 +1,9 @@
 package actions
 
 import (
-	"songwhip_bot/models"
-	dbModels "songwhip_bot/modules/db/models"
-	"songwhip_bot/modules/logging"
+	"songguru_bot/models"
+	dbModels "songguru_bot/modules/db/models"
+	"songguru_bot/modules/logging"
 
 	"github.com/bwmarrin/discordgo"
 )

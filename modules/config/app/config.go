@@ -5,8 +5,8 @@ import (
 	"io"
 	"os"
 
-	"songwhip_bot/models"
-	"songwhip_bot/modules/logging"
+	"songguru_bot/models"
+	"songguru_bot/modules/logging"
 
 	"github.com/bwmarrin/discordgo"
 	"gopkg.in/yaml.v3"

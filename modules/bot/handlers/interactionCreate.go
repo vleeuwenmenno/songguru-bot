@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"songwhip_bot/modules/bot/commands"
+	"songguru_bot/modules/bot/commands"
 
 	"github.com/bwmarrin/discordgo"
 )

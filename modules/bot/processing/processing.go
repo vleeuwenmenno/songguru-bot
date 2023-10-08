@@ -1,14 +1,14 @@
-package songwhip
+package processing
 
 import (
 	"errors"
 	"fmt"
 	"regexp"
-	"songwhip_bot/models"
-	dbModels "songwhip_bot/modules/db/models"
-	"songwhip_bot/modules/logging"
-	songwhipapi "songwhip_bot/modules/songwhip_api"
-	songwhipModels "songwhip_bot/modules/songwhip_api/models"
+	"songguru_bot/models"
+	dbModels "songguru_bot/modules/db/models"
+	"songguru_bot/modules/logging"
+	songguruapi "songguru_bot/modules/songwhip_api"
+	songguruModels "songguru_bot/modules/songwhip_api/models"
 	"strings"
 
 	"github.com/bwmarrin/discordgo"
@@ -35,7 +35,7 @@ func ProcessMessage(app *models.App, session *discordgo.Session, event *discordg
 
 	for _, service := range app.Services.StreamingServices {
 		if isValidLink(*link, service) {
-			info, err := songwhipapi.GetInfo(*link)
+			info, err := songguruapi.GetInfo(*link)
 
 			if err != nil {
 				if strings.Contains(err.Error(), "429 Too Many Requests") {
@@ -62,7 +62,7 @@ func ProcessMessage(app *models.App, session *discordgo.Session, event *discordg
 	}
 }
 
-func buildEmbed(info *songwhipModels.SongwhipInfo, shouldDeleteMessage bool, event *discordgo.MessageCreate, link *string, session *discordgo.Session, service models.Service) *discordgo.MessageEmbed {
+func buildEmbed(info *songguruModels.SongwhipInfo, shouldDeleteMessage bool, event *discordgo.MessageCreate, link *string, session *discordgo.Session, service models.Service) *discordgo.MessageEmbed {
 	newArtists := []string{}
 	for _, artist := range info.Artists {
 		newArtists = append(newArtists, artist.Name)
@@ -103,7 +103,7 @@ func buildEmbed(info *songwhipModels.SongwhipInfo, shouldDeleteMessage bool, eve
 	return embed
 }
 
-func buildStreamingServices(info *songwhipModels.SongwhipInfo) string {
+func buildStreamingServices(info *songguruModels.SongwhipInfo) string {
 	desc := ""
 
 	if info.Links.Spotify {

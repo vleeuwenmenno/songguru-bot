@@ -1,8 +1,8 @@
 package handlers
 
 import (
-	"songwhip_bot/modules/actions"
-	"songwhip_bot/modules/logging"
+	"songguru_bot/modules/actions"
+	"songguru_bot/modules/logging"
 
 	"github.com/bwmarrin/discordgo"
 )

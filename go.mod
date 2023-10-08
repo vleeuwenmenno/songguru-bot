@@ -1,4 +1,4 @@
-module songwhip_bot
+module songguru_bot
 
 go 1.20
 

@@ -1,10 +1,10 @@
 package commands
 
 import (
-	"songwhip_bot/models"
-	"songwhip_bot/modules/actions"
-	dbModels "songwhip_bot/modules/db/models"
-	"songwhip_bot/modules/logging"
+	"songguru_bot/models"
+	"songguru_bot/modules/actions"
+	dbModels "songguru_bot/modules/db/models"
+	"songguru_bot/modules/logging"
 	"time"
 
 	"github.com/bwmarrin/discordgo"

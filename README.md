@@ -1,9 +1,9 @@
-# Songwhip Discord bot
+# SongGuru Discord bot
 
-A songwhip discord bot that converts your song links to a nice looking embed.
-#### [Add this Bot to my Discord server!](https://discord.ly/songwhip) - [Direct](https://discord.com/api/oauth2/authorize?client_id=860899901020700684&permissions=689610975232&scope=bot)
+A discord bot that converts your song links to a universal format. No longer limited to sharing music with friends that use the same streaming service!
+#### [Add this Bot to my Discord server!](https://discord.ly/songguru) - [Direct](https://discord.com/api/oauth2/authorize?client_id=860899901020700684&permissions=689610975232&scope=bot)
 
-![alt text](https://github.com/vleeuwenmenno/songwhip-bot/raw/develop/images/preview.png)
+![alt text](https://github.com/vleeuwenmenno/songguru-bot/raw/develop/images/preview.png)
 
 
 ## Deployment
@@ -19,7 +19,7 @@ Deployment is done using docker and can be done using the provided `docker-compo
 
 Alternatively you can build a container yourself as follows:
 
-1. Clone the repository `git clone git@github.com:vleeuwenmenno/songwhip-bot.git`
+1. Clone the repository `git clone git@github.com:vleeuwenmenno/songguru-bot.git`
 2. Checkout to your desired branch `git checkout production`
 3. Build a docker image `make`
 4. Update your config files and your `docker-compose.yml` to run your local image.
@@ -32,7 +32,7 @@ Alternatively you can build a container yourself as follows:
    - In the guild/server you want to do this, use the command `/settings`. This will generate a one-time link where you can edit your settings and your guild/server settings if you have the proper role for that.
 
 2. I already had the bot on my server, but I can't edit the admin settings?
-   - Due to the v2.0.0 update, the bot adds new features that require the "manage roles" permission to work properly. You may need to invite the bot to your server again. The invite link provided in this README has been updated to include the proper permissions. Alternatively, you can create a new role called `SongwhipAdmin`, which should also work. This needs to be verified (#28).
+   - Due to the v2.0.0 update, the bot adds new features that require the "manage roles" permission to work properly. You may need to invite the bot to your server again. The invite link provided in this README has been updated to include the proper permissions. Alternatively, you can create a new role called `SongGuruAdmin`, which should also work. This needs to be verified (#28).
 
 3. I shared the settings link, and now all my settings have changed?!
    - Please avoid sharing this link. You can generate a new one, and all links are only valid for 15 minutes. Although no harm can be done with the link, it's always better to keep it private. In the future, we might change the way these links work to prevent multiple sessions by locking them to your IP or using another method.

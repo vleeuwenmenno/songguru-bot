@@ -3,10 +3,10 @@ package bot
 import (
 	"os"
 	"os/signal"
-	"songwhip_bot/models"
-	"songwhip_bot/modules/bot/handlers"
-	config "songwhip_bot/modules/config/app"
-	"songwhip_bot/modules/logging"
+	"songguru_bot/models"
+	"songguru_bot/modules/bot/handlers"
+	config "songguru_bot/modules/config/app"
+	"songguru_bot/modules/logging"
 	"syscall"
 
 	"github.com/bwmarrin/discordgo"

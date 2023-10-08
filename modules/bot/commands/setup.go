@@ -2,7 +2,7 @@ package commands
 
 import (
 	"errors"
-	"songwhip_bot/models"
+	"songguru_bot/models"
 
 	"github.com/bwmarrin/discordgo"
 )

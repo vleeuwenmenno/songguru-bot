@@ -4,8 +4,8 @@ import (
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 
-	"songwhip_bot/models"
-	dbModels "songwhip_bot/modules/db/models"
+	"songguru_bot/models"
+	dbModels "songguru_bot/modules/db/models"
 )
 
 func SetupDB(config *models.Config) (*gorm.DB, error) {

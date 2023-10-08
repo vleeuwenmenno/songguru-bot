@@ -1,4 +1,4 @@
-package songwhipapi
+package songguruapi
 
 import (
 	"bytes"
@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"songwhip_bot/modules/songwhip_api/models"
+	"songguru_bot/modules/songwhip_api/models"
 	"strings"
 )
 

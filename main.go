@@ -2,14 +2,14 @@ package main
 
 import (
 	"fmt"
-	"songwhip_bot/models"
-	"songwhip_bot/modules/bot"
-	config "songwhip_bot/modules/config/app"
-	"songwhip_bot/modules/config/services"
-	"songwhip_bot/modules/db"
-	dbModels "songwhip_bot/modules/db/models"
-	"songwhip_bot/modules/logging"
-	"songwhip_bot/modules/web"
+	"songguru_bot/models"
+	"songguru_bot/modules/bot"
+	config "songguru_bot/modules/config/app"
+	"songguru_bot/modules/config/services"
+	"songguru_bot/modules/db"
+	dbModels "songguru_bot/modules/db/models"
+	"songguru_bot/modules/logging"
+	"songguru_bot/modules/web"
 	"sync"
 
 	"github.com/gin-gonic/gin"
