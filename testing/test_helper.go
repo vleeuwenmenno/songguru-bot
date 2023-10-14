@@ -5,12 +5,8 @@ import (
 	"testing"
 )
 
-func setupTest(t *testing.T) {
-	os.Chdir(os.Getenv("WORKSPACE_DIR"))
-}
-
 func Setup(t *testing.T) {
-	setupTest(t)
+	os.Chdir(os.Getenv("WORKSPACE_DIR"))
 }
 
 func Equal(a, b []string) bool {

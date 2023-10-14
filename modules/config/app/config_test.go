@@ -1,16 +1,19 @@
 package config
 
 import (
-	th "songguru_bot/testing"
+	"fmt"
 	"strings"
 	"testing"
+
+	iohelper "songguru_bot/modules/helpers"
+	th "songguru_bot/testing"
 )
 
 func TestGetConfig(t *testing.T) {
 	th.Setup(t)
 
 	// Specify the path to the test-specific YAML file
-	testConfigFile := "configs/config.test.yaml"
+	testConfigFile := iohelper.ProjectRoot + "/configs/config.test.yaml"
 
 	// Load the configuration
 	config, err := GetConfig(testConfigFile)
@@ -40,7 +43,7 @@ func TestGetConfigFailure(t *testing.T) {
 	th.Setup(t)
 
 	// Specify the path to the test-specific YAML file
-	testConfigFile := "blabla/config.test.yaml"
+	testConfigFile := iohelper.ProjectRoot + "/blabla/config.test.yaml"
 
 	// Load the configuration
 	_, err := GetConfig(testConfigFile)
@@ -48,7 +51,7 @@ func TestGetConfigFailure(t *testing.T) {
 		t.Errorf("expected error, but got nil")
 	}
 
-	expectedErrorMessage := "failed to open config file: open blabla/config.test.yaml"
+	expectedErrorMessage := fmt.Sprintf("failed to open config file: open %s/blabla/config.test.yaml", iohelper.ProjectRoot)
 	if !strings.Contains(err.Error(), expectedErrorMessage) {
 		t.Errorf("expected error message to contain %q, but got %q", expectedErrorMessage, err.Error())
 	}

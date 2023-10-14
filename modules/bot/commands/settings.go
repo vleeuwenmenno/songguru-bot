@@ -1,14 +1,15 @@
 package commands
 
 import (
-	"songguru_bot/models"
-	"songguru_bot/modules/actions"
-	dbModels "songguru_bot/modules/db/models"
-	"songguru_bot/modules/logging"
 	"time"
 
 	"github.com/bwmarrin/discordgo"
 	"github.com/google/uuid"
+
+	"songguru_bot/models"
+	"songguru_bot/modules/actions"
+	dbModels "songguru_bot/modules/db/models"
+	"songguru_bot/modules/logging"
 )
 
 func settings(session *discordgo.Session, event *discordgo.InteractionCreate, app *models.App) error {
@@ -16,17 +17,17 @@ func settings(session *discordgo.Session, event *discordgo.InteractionCreate, ap
 	config := app.Config
 	token := uuid.Must(uuid.NewRandom()).String()
 
-	// If requester has role admin
-	roles, err := session.GuildRoles(event.GuildID)
+	// If requester has bot role
+	guild, err := session.Guild(event.GuildID)
 
 	if err != nil {
-		logging.PrintLog("Error getting admin roles for guild (ID: %s)", event.GuildID)
+		logging.PrintLog("Error getting bot guild (ID: %s)", event.GuildID)
 		return err
 	}
 
-	adminRoleID, err := actions.GuildHasAdminRole(roles, config)
+	BotRole, err := actions.GetBotRole(session, guild, app.Config.Discord.ModeratorRoleName)
 	if err != nil {
-		logging.PrintLog("Error getting admin roles for guild (ID: %s)", event.GuildID)
+		logging.PrintLog("Error getting bot role for guild (ID: %s)", event.GuildID)
 		return err
 	}
 
@@ -39,7 +40,7 @@ func settings(session *discordgo.Session, event *discordgo.InteractionCreate, ap
 	}
 
 	for _, role := range event.Member.Roles {
-		if role == adminRoleID {
+		if role == BotRole.ID {
 			webToken = dbModels.SettingsWebToken{
 				ID:            token,
 				GuildID:       event.GuildID,

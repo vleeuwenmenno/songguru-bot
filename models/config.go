@@ -2,8 +2,8 @@ package models
 
 type Config struct {
 	Discord struct {
-		BotToken      string `yaml:"bot_token"`
-		AdminRoleName string `yaml:"admin_role_name"`
+		BotToken          string `yaml:"bot_token"`
+		ModeratorRoleName string `yaml:"moderator_role_name"`
 	} `yaml:"discord"`
 	DefaultGuildSettings struct {
 		KeepOriginalMessage struct {
@@ -26,4 +26,8 @@ type Config struct {
 		URL       string `yaml:"url"`
 		DebugMode bool   `yaml:"debug_mode"`
 	} `yaml:"web_portal"`
+	NotifyMessages []struct {
+		ID      string `yaml:"id"`
+		Message string `yaml:"message"`
+	} `yaml:"notify_messages"`
 }

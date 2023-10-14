@@ -1,6 +1,6 @@
 discord:
   bot_token: TOKEN_HERE
-  admin_role_name: SongGuruAdmin
+  moderator_role_name: BOT_MODERATOR_ROLE_NAME
 
 intents: 
   - Guilds         # Needed for keeping track of guilds
@@ -23,3 +23,36 @@ web_portal:
   port: 8080
   url: http://localhost:8080
   debug_mode: false
+
+notify_messages:
+  - id: bot_role_create_failed
+    message: | 
+      Hi guild owner, 
+
+      I encountered a small issue, we tried to create the "SongGuru Moderator" role but this failed due to a lack of permissions. 
+      I tried to create this role because the role is used to allow members that have this role to edit guild preferences using the `/settings` command.
+
+      You can solve this issue in 2 ways, add the "Manage Roles" permission to the bot in your guild or manually create a new role with the exact name "SongGuru Moderator".
+      
+      If you have any further questions or suggestions, feel free to DM <@!175487814274777088>.
+      Alternatively, you can join our Discord guild for support: [SongGuru Support Guild](https://discord.gg/XAxAh2CrNZ)
+
+      Have a nice day!
+
+      Greetings from <@!175487814274777088> and SongGuru! :wave:
+
+  - id: welcome
+    message: |
+      Hi guild owner,
+
+      Thanks for adding SongGuru to your guild!
+
+      To get started, in your guild use the command `/settings` to get a link to edit your personal and guild preferences.
+      Don't worry only members with the SongGuru Moderator role will be able to adjust guild preferences.
+
+      If you have any questions or suggestions, feel free to DM <@!175487814274777088>.
+      Alternatively, you can join our Discord guild for support: [SongGuru Support Guild](https://discord.gg/XAxAh2CrNZ)
+
+      Have a nice day!
+
+      Greetings from <@!175487814274777088> and SongGuru! :wave:

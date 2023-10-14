@@ -19,6 +19,7 @@ func SetupDB(config *models.Config) (*gorm.DB, error) {
 	db.AutoMigrate(&dbModels.GuildSetting{})
 	db.AutoMigrate(&dbModels.MemberSetting{})
 	db.AutoMigrate(&dbModels.SettingsWebToken{})
+	db.AutoMigrate(&dbModels.NoticeRegistry{})
 
 	return db, nil
 }

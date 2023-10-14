@@ -4,15 +4,16 @@ import (
 	"errors"
 	"fmt"
 	"regexp"
-	"songguru_bot/models"
-	dbModels "songguru_bot/modules/db/models"
-	"songguru_bot/modules/logging"
-	songguruapi "songguru_bot/modules/songwhip_api"
-	songguruModels "songguru_bot/modules/songwhip_api/models"
 	"strings"
 
 	"github.com/bwmarrin/discordgo"
 	"gorm.io/gorm"
+
+	"songguru_bot/models"
+	dbModels "songguru_bot/modules/db/models"
+	"songguru_bot/modules/logging"
+	songwhip_api "songguru_bot/modules/songwhip_api"
+	songguruModels "songguru_bot/modules/songwhip_api/models"
 )
 
 func ProcessMessage(app *models.App, session *discordgo.Session, event *discordgo.MessageCreate) {
@@ -35,7 +36,7 @@ func ProcessMessage(app *models.App, session *discordgo.Session, event *discordg
 
 	for _, service := range app.Services.StreamingServices {
 		if isValidLink(*link, service) {
-			info, err := songguruapi.GetInfo(*link)
+			info, err := songwhip_api.GetInfo(*link)
 
 			if err != nil {
 				if strings.Contains(err.Error(), "429 Too Many Requests") {

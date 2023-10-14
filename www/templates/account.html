@@ -24,22 +24,22 @@
 						Enable<em data-tooltip="Enable mention only mode"><small>(?)</small></em>
 					</label>
 				<details>
-					<summary>Admin settings</summary>
+					<summary>Guild preferences</summary>
 					<p>
 
 						<label>
 							<input type="checkbox" name="serverSettingsMentionOnlyMode" {{ if
 								.serverSettings.MentionOnlyMode }}checked{{end}} {{ if .adminToken }}
 								{{else}}disabled{{end}} />
-							Server enable<em
-								data-tooltip="Enable mention only mode for everyone on this server/guild"><small>(?)</small></em>
+							Enable<em
+								data-tooltip="Enable mention only mode for everyone on this guild"><small>(?)</small></em>
 						</label>
 						<label>
 							<input type="checkbox" name="serverSettingsAllowOverrideMentionOnlyMode" {{ if
 								.serverSettings.AllowOverrideMentionOnlyMode }}checked{{end}} {{ if .adminToken }}
 								{{else}}disabled{{end}} />
 							Allow members to override server setting<em
-								data-tooltip="Allow members to override this setting for this server/guild"><small>(?)</small></em>
+								data-tooltip="Allow members to override this setting for this guild"><small>(?)</small></em>
 						</label>
 					</p>
 				</details>
@@ -57,21 +57,21 @@
 						Enable<em data-tooltip="Enable simple mode"><small>(?)</small></em>
 					</label>
 				<details>
-					<summary>Admin settings</summary>
+					<summary>Guild preferences</summary>
 					<p>
 
 						<label>
 							<input type="checkbox" name="serverSettingsSimpleMode" {{ if .serverSettings.SimpleMode
 								}}checked{{end}} {{ if .adminToken }} {{else}}disabled{{end}} />
-							Server enable<em
-								data-tooltip="Enable simple mode for everyone on this server/guild"><small>(?)</small></em>
+							Enable<em
+								data-tooltip="Enable simple mode for everyone on this guild"><small>(?)</small></em>
 						</label>
 						<label>
 							<input type="checkbox" name="serverSettingsAllowOverrideSimpleMode" {{ if
 								.serverSettings.AllowOverrideSimpleMode }}checked{{end}} {{ if .adminToken }}
 								{{else}}disabled{{end}} />
 							Allow members to override server setting<em
-								data-tooltip="Allow members to override this setting for this server/guild"><small>(?)</small></em>
+								data-tooltip="Allow members to override this setting for this guild"><small>(?)</small></em>
 						</label>
 					</p>
 				</details>
@@ -89,28 +89,28 @@
 							data-tooltip="Enable to keep original messages when you trigger the bot"><small>(?)</small></em>
 					</label>
 				<details>
-					<summary>Admin settings</summary>
+					<summary>Guild preferences</summary>
 					<p>
 
 						<label>
 							<input type="checkbox" name="serverSettingsKeepOriginalMessage" {{ if
 								.serverSettings.KeepOriginalMessage }}checked{{end}} {{ if .adminToken }}
 								{{else}}disabled{{end}} />
-							Server enable<em
-								data-tooltip="Enable keeping original messages for everyone on this server/guild"><small>(?)</small></em>
+							Enable<em
+								data-tooltip="Enable keeping original messages for everyone on this guild"><small>(?)</small></em>
 						</label>
 						<label>
 							<input type="checkbox" name="serverSettingsAllowOverrideKeepOriginalMessage" {{ if
 								.serverSettings.AllowOverrideKeepOriginalMessage }}checked{{end}} {{ if .adminToken }}
 								{{else}}disabled{{end}} />
 							Allow members to override server setting<em
-								data-tooltip="Allow members to override this setting for this server/guild"><small>(?)</small></em>
+								data-tooltip="Allow members to override this setting for this guild"><small>(?)</small></em>
 						</label>
 					</p>
 				</details>
 				</p>
 				<small>Note: Make sure your guild has the SongGuru bot added with the proper permissions otherwise you
-					won't be able to use admin settings!</small>
+					won't be able to use Guild preferences!</small>
 					<h3 class="secondary">Keep original message</h3>
 				<p>
 					When this is enabled the bot won't delete the message that triggered the bot.
@@ -120,7 +120,7 @@
 						<input type="checkbox" name="memberSettingsKeepOriginalMessage" {{ if
 							.memberSettings.KeepOriginalMessage }}checked{{end}} />
 						Experimental search<em
-							data-tooltip="This uses the bots built-in search feature instead of Songwhip"><small>(?)</small></em>
+							data-tooltip="This uses the bots built-in search feature instead of querying at Songwhip API"><small>(?)</small></em>
 					</label>
 				</p>
 			</article>

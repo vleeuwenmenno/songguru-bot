@@ -5,11 +5,11 @@ import (
 	"io"
 	"os"
 
-	"songguru_bot/models"
-	"songguru_bot/modules/logging"
-
 	"github.com/bwmarrin/discordgo"
 	"gopkg.in/yaml.v3"
+
+	"songguru_bot/models"
+	"songguru_bot/modules/logging"
 )
 
 var intentMap = map[string]discordgo.Intent{
