@@ -17,6 +17,7 @@ func NewGuildCreateHandler(b Bot) func(s *discordgo.Session, g *discordgo.GuildC
 
 		// Ensure basics
 		actions.EnsureGuildIsWatched(s, g.Guild, b.GetApp())
+		actions.EnsureGuildPreferences(s, g.Guild, b.GetApp())
 		actions.EnsureBotRoleExists(&role, s, g.Guild, b.GetApp())
 
 		if role == nil {

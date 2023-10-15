@@ -13,7 +13,6 @@ import (
 
 func EnsureGuildIsWatched(s *discordgo.Session, g *discordgo.Guild, app *models.App) {
 	db := app.DB
-	config := app.Config
 	existingGuild := dbModels.Guild{}
 	db.Find(&existingGuild, "ID = ?", g.ID).Limit(1)
 
@@ -26,21 +25,6 @@ func EnsureGuildIsWatched(s *discordgo.Session, g *discordgo.Guild, app *models.
 
 		if pk.Error != nil {
 			logging.PrintLog("- error storing guild: %s", pk.Error)
-		}
-
-		guildSettingsPk := db.Create(&dbModels.GuildSetting{
-			ID:                               g.ID,
-			GuildRefer:                       g.ID,
-			MentionOnlyMode:                  config.DefaultGuildSettings.MentionMode.Enabled,
-			AllowOverrideMentionOnlyMode:     config.DefaultGuildSettings.MentionMode.AllowOverride,
-			SimpleMode:                       config.DefaultGuildSettings.SimpleMode.Enabled,
-			AllowOverrideSimpleMode:          config.DefaultGuildSettings.SimpleMode.AllowOverride,
-			KeepOriginalMessage:              config.DefaultGuildSettings.KeepOriginalMessage.Enabled,
-			AllowOverrideKeepOriginalMessage: config.DefaultGuildSettings.KeepOriginalMessage.AllowOverride,
-		})
-
-		if guildSettingsPk.Error != nil {
-			logging.PrintLog("- error storing guild settings: %s", pk.Error)
 		}
 
 		logging.PrintLog("- %s (id: %s) seen for the first time!", g.Name, g.ID)

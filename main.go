@@ -2,17 +2,19 @@ package main
 
 import (
 	"fmt"
+	"sync"
+
+	"github.com/gin-gonic/gin"
+
 	"songguru_bot/models"
+	"songguru_bot/modules/api"
 	"songguru_bot/modules/bot"
 	config "songguru_bot/modules/config/app"
 	"songguru_bot/modules/config/services"
 	"songguru_bot/modules/db"
 	dbModels "songguru_bot/modules/db/models"
 	"songguru_bot/modules/logging"
-	"songguru_bot/modules/web"
-	"sync"
-
-	"github.com/gin-gonic/gin"
+	"songguru_bot/modules/portal"
 )
 
 func NewApp() (*models.App, error) {
@@ -43,6 +45,7 @@ func NewApp() (*models.App, error) {
 	return &models.App{
 		Config:   config,
 		Services: services,
+		States:   &models.States{Memory: []string{}},
 		DB:       db,
 	}, nil
 }
@@ -65,13 +68,14 @@ func main() {
 
 	go func() {
 		router := gin.Default()
-		if app.Config.WebPortal.DebugMode {
-			gin.SetMode(gin.DebugMode)
-		} else {
-			gin.SetMode(gin.ReleaseMode)
-		}
+		portal.StartWebPortal(router, app)
+		wg.Done()
+	}()
+	wg.Add(1)
 
-		web.StartWebPortal(router, app)
+	go func() {
+		router := gin.Default()
+		api.StartAPI(router, app)
 		wg.Done()
 	}()
 

@@ -1,6 +1,9 @@
 discord:
-  bot_token: TOKEN_HERE
-  moderator_role_name: BOT_MODERATOR_ROLE_NAME
+  bot_token: BOT_TOKEN
+  client_id: CLIENT_ID
+  client_secret: CLIENT_SECRET
+  redirect_url: REDIRECT_URL
+  moderator_role_name: "SongGuru Moderator"
 
 intents: 
   - Guilds         # Needed for keeping track of guilds
@@ -19,10 +22,16 @@ default_guild_settings:
     enabled: true
     allow_members_override: false
 
+api:
+  jwt_secret: VERY_LONG_SECRET_HERE
+  port: 8081
+  session_lifetime: "15m"
+  url: http://localhost:8081
+
 web_portal:
+  domain: localhost
   port: 8080
   url: http://localhost:8080
-  debug_mode: false
 
 notify_messages:
   - id: bot_role_create_failed
