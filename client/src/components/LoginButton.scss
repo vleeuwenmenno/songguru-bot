@@ -1,0 +1,34 @@
+.discord-btn {
+    background: #5865F2;
+    border: none !important;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    border-radius: 3px;
+    transition: background 0.2s;
+    text-align: center;
+  }
+  
+  .discord-btn:hover {
+    background: #4750D0; /* Darkened version of Blurple */
+    text-decoration: none;
+    color: white;
+  }
+  
+  .discord-btn:active {
+    background: #343FD6; /* Even darker version of Blurple */
+  }
+  
+  .discord-icon {
+    margin-right: 5px;
+    vertical-align: middle;
+  }
+  
+  .discord-text {
+    font-weight: 500;
+    vertical-align: middle;
+    display: inline-block;
+  }
+  

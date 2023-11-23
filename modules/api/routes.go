@@ -180,6 +180,7 @@ func setupRoutes(api *gin.RouterGroup, app *models.App) {
 		})
 
 		auth.GET("/logout", func(c *gin.Context) {
+			// TODO: Call discord https://discord.com/api/oauth2/token/revoke
 			c.SetCookie("jwt", "", 0, "/", app.Config.WebPortal.Domain, true, true)
 			c.Status(http.StatusOK)
 		})

@@ -1,4 +1,4 @@
-import { CircularProgress } from "@material-ui/core"
+import { Spinner } from "react-bootstrap"
 import React from "react"
 import ResourceState from "../features/types"
 
@@ -18,7 +18,7 @@ export function Resource<T>({
     }
 
     return <>
-        {selector.loading && <CircularProgress />}
+        {selector.loading && <Spinner />}
         {!selector.loading && selector.data && children}
         {!selector.loading && !selector.data && (
             <p>Provided data is undefined or false</p>

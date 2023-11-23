@@ -1,3 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
     background-color: #36393F;
+}
+
+.discord-btn {
+  background: #7289da !important;
+  color: #282b30 !important;
+  border: 2px solid #36393e !important;
+  border-radius: 3px;
+  padding: 5px 10px;
+  text-transform: uppercase;
 }

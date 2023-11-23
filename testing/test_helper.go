@@ -6,7 +6,10 @@ import (
 )
 
 func Setup(t *testing.T) {
-	os.Chdir(os.Getenv("WORKSPACE_DIR"))
+	err := os.Chdir(os.Getenv("WORKSPACE_DIR"))
+	if err != nil {
+		return
+	}
 }
 
 func Equal(a, b []string) bool {

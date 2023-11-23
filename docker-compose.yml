@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    # image: "stardebris/songshizz-bot"
+    # image: stardebris/songshizz-bot
     restart: unless-stopped
     volumes:
       - "./configs:/app/configs"

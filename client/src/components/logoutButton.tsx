@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { doLogout } from "../features/authentication/authenticationSlice";
-import { Button } from "@material-ui/core";
+import { Button } from "react-bootstrap"
 import { AppDispatch } from "../store";
 
 
@@ -12,7 +12,7 @@ function LogoutButton(): JSX.Element {
         window.location.href = '/';
     }
 
-    return <Button onClick={logoutButtonClick} variant="contained">
+    return <Button className="float-right" onClick={logoutButtonClick} variant="secondary">
         Logout
     </Button>
 }
